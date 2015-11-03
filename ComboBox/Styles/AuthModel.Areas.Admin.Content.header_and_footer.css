@@ -1,0 +1,325 @@
+@charset "utf-8";
+/*
+  @data 2014-2-12
+  Author: Linda
+  =======
+  0b9caf - Dark cyan - LOGO color
+  d2d2d2 - Light gray
+  f6f6f5 - Light grayish yellow
+  ef841c - Vivid orange - LOGO color
+  555    - Very dark gray
+  999    - Dark gray
+  000    - Black
+  FFF    - White
+  =======
+  20151002_Kate
+* TEMS Stylesheet
+------------------------------------
+   1. Initial Area Setting
+   2. TECRMheader
+   3. Navigation Bar: TECRMheader-nav
+   4. GoPageContent
+   5. Button
+   6. Images
+------------------------------------
+*/
+
+/*=============================================================
+   1. Initial Area Setting
+===============================================================*/
+body {background: #f2f2f2; font: normal 14px "微軟正黑體", "Microsoft JhengHei", "新細明體", "Arial"; color: #666;}
+a{font-family:"微軟正黑體", "Microsoft JhengHei", "新細明體", "Arial";}
+a:hover { text-decoration: none;}
+
+/*=============================================================
+    TECRMheader
+**  LOGO
+**  Right Bar
+**  Font Style
+**  Hyper-link Style
+===============================================================*/
+.LogoArea{ float: left; }
+.TECRMheader { height: 35px; padding: 15px 25px; background: #fff;}
+
+/* LOGO */
+.LogoArea { background: url(../images/LogoArea.png) no-repeat;}
+.LogoArea.SmallLogo { width: 102px; height: 35px; background-position: 0 -42px;}
+.LogoArea.SmallName { width: 100px; height: 17px; margin: 18px 0 12px 12px; background-position: -122px -42px;}
+
+.TECRMheader-Icons { margin-top: -5px; font-size: 14px; color: #3ea2af; float: right;}
+.TECRMheader-Icons a{ color: #a19e9b}
+.TECRMheader-Icons a:hover{ color: #3ea2af; text-decoration: none;}
+.TECRMheader-Icons ul li { list-style-type: none; display: inline; margin-right: 1em;}
+.TECRMheader-Icons ul li:last-child { margin-right:0 ;}
+.TECRMheader-Icons ul li.LogIcon3:before,
+.TECRMheader-Icons ul li.LogIcon4:before,
+.TECRMheader-Icons ul li.LogIcon5:before{ content: ''; display: inline-block; width: 14px; height: 14px; background: url(../images/TECRMheader-Icons.png) no-repeat;}
+.TECRMheader-Icons ul li.LogIcon3:before{ background-position: 0 0;}
+.TECRMheader-Icons ul li.LogIcon4:before{ background-position: 0 -20px;}
+.TECRMheader-Icons ul li.LogIcon5:before{ background-position: 0 -40px;}
+.TECRMheader-Icons ul li.LogIcon3:hover:before{ background-position: -20px 0;}
+.TECRMheader-Icons ul li.LogIcon4:hover:before{ background-position: -20px -20px;}
+.TECRMheader-Icons ul li.LogIcon5:hover:before{ background-position: -20px -40px;}
+
+.Navline1 {
+    margin-bottom: -1px;
+    display: inline-block;
+    width: 1px;
+    height: 11px;
+    background: url(../images/header_1.png) no-repeat 0 -136px;
+}
+.ie7 .Navline1 { margin-left: 6px; }
+.ie7 .TECRMheader-Icons { position: relative; top: -50px; }
+.TECRMheader-Icons-Bubble { font-size: 8px; font-family: "Arial"; color: #FFF;
+    position: relative;
+    background-color: #ef9740;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    behavior: url(PIE.htc);
+    top: -8px;
+    left: -7px;
+    border-radius: 50%;
+    padding: 2px 3px 2px 2px;
+    max-width: 15px;
+}
+.ie9 .TECRMheader-Icons-Bubble { padding: 2px 3px 2px 2px; }
+.ie8 .TECRMheader-Icons-Bubble { padding: 2px 3px 2px 1px; }
+.ie7 .TECRMheader-Icons-Bubble { padding: 3px 3px 2px 3px; }
+
+/* Right Bar */
+@media screen and (max-width: 640px) {
+   .TECRMheader-Icons { display: none; }
+}
+
+/* Font Style */
+.TECRMheader-Title span { font-size: 2em; font-weight: bold; color: #555;}
+
+.ie9 .TECRMheader-Icons-Bubble,
+.ie8 .TECRMheader-Icons-Bubble,
+.ie7 .TECRMheader-Icons-Bubble { font-size: 9px; }
+
+
+/*=============================================================
+   3. Navigation Bar: TECRMheader-nav
+===============================================================*/
+.TECRMheader-nav { height: 32px; padding-left: 24px; background: #a19e9b;}
+.TECRMheader-nav a {display: block; font-size: 14px; color: #000; padding: 5px 0 5px 15px;}
+.TECRMheader-nav a:hover { color: #FFF; background: #ef9740;}
+.TECRMheader-nav ul { float: left; }
+.TECRMheader-nav ul:hover { background: #fff; border-top:4px solid #ef9740; color: #a19e9b;}
+.TECRMheader-nav ul h2 { padding: 0 15px; color: #FFF; font: normal 16px/32px "微軟正黑體"; display: inline;}
+.TECRMheader-nav ul:hover h2{ margin-top:-4px; color: #8c8987;}
+.TECRMheader-nav ul li { display:block; cursor: pointer;}
+.TECRMheader-nav>ul:first-child>li:before,
+.TECRMheader-nav>ul>li:after{ content: ''; display: inline-block; width: 1px; height: 12px; background: #bab6b3;}
+.TECRMheader-nav>ul:first-child>li:hover:before,
+.TECRMheader-nav>ul>li:hover:after{ background: #fff;}
+.TECRMheader-nav ul ul { display: none; margin-left:-1px; padding:8px 0; width:150px; position: absolute; top: 97px; border-top:0; border: 1px solid #d2d2d2; z-index: 999;}
+.TECRMheader-nav ul:hover ul { border-top:0; display: block; background: #fff;}
+.TECRMheader-nav ul ul li { width: 100%; display: block; position: relative;}
+.TECRMheader-nav ul ul li a{ line-height: 1.8em; color: #8c8987; text-decoration: none;}
+
+.ie7 .TECRMheader-nav h2 { padding-left: 18px; }
+.ie7 .TECRMheader-nav ul li { width: 100px;}
+.ie7 .TECRMheader-nav ul ul { position: relative; top: -3px; width: auto;}
+
+
+/*===============================================================
+   4. TECRMheader-path
+=================================================================*/
+.TECRMheader-path { margin: 0 auto; padding: 12px 0 20px 23px; font-size: 14px;}
+.TECRMheader-path a,
+.TECRMheader-path span{ font-size: 14px; color: #222;}
+.TECRMheader-path span:after{ content: '>'; padding: 0 0.25em 0 0.5em}
+.TECRMheader-path span:last-child:after{ content: ''; padding: 0;}
+.TECRMheader-path span:last-child{ color: #3ea2af}
+.TECRMheader-Title { width: auto; height: 30px; padding: 10px 0 8px 44px; }
+/*===============================================================
+   4. GoPageContent 不確定是否有使用20151002
+=================================================================*/
+.GoPageContent{ font-size: 12px; letter-spacing: 0.06em;}
+.GoPageContent{ margin: 12px auto 0 auto; display: block;  text-align: center; }
+.GoPageContent a{ margin: 0; padding:0; }
+.GoPageContent div  { display: table-cell; }
+.ie7 .GoPageContent { display: block;  text-align: center; }
+.ie7 .GoPageContent div { display: block; }
+input.textstyle1 { width: 20px; padding-left: 5px; }
+
+.jump { font-size: 12px; letter-spacing: 0.06em;
+    border: 0;
+    background: url(../images/MailStyle.png) 0 -157px no-repeat;
+    display: inline-block;
+    cursor: pointer;
+    behavior: url(PIE.htc);
+    width: 39px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+}
+.jump:hover { background-position: -39px -157px; }
+.ie8 .jump {  text-align: center; }
+.ie7 .jump:hover { background: url(../images/MailStyle.png) -39px -157px no-repeat; }
+.ie7 .jump { padding: 2px; height: 20px;}
+.TableStyleIcon.gofirst,
+.TableStyleIcon.goprev,
+.TableStyleIcon.gonext,
+.TableStyleIcon.golast {
+    background: #FFF url(../images/MailStyle.png) no-repeat;
+    border: 0;
+    width: 7px;
+    height: 9px;
+    margin-right: 12px;
+}
+.TableStyleIcon {
+    background: url(../images/MailStyle.png) no-repeat;
+    display: inline-block;
+}
+.GoPageContent a { text-indent: -99999em; }
+span.gofirst, span.goprev, span.gonext, span.golast { margin-bottom: 3px; }
+
+.TableStyleIcon.gofirst { background-position: -78px -157px; }
+.TableStyleIcon.goprev  { background-position: -85px -157px; }
+.TableStyleIcon.gonext  { background-position: -92px -157px; }
+.TableStyleIcon.golast  { background-position: -99px -157px; }
+.TableStyleIcon.gofirst:hover,
+.TableStyleIcon.gofirst.on { background-position: -78px -167px; }
+.TableStyleIcon.goprev:hover,
+.TableStyleIcon.goprev.on   { background-position: -85px -167px; }
+.TableStyleIcon.gonext:hover,
+.TableStyleIcon.gonext.on   { background-position: -92px -167px; }
+.TableStyleIcon.golast:hover,
+.TableStyleIcon.golast.on   { background-position: -99px -167px; }
+.ie7 .TableStyleIcon.gofirst, .ie7 .TableStyleIcon.goprev,
+.ie7 .TableStyleIcon.gonext, .ie7 .TableStyleIcon.golast { margin-bottom: 5px; }
+
+/*=====================================================
+   5. Button 不確定是否有使用20151002
+=====================================================*/
+div.search, .btn1, .btn2 {
+    font-family: "微軟正黑體", "新細明體", "Arial";
+    font-size: 14px;
+    letter-spacing: 0.06em;
+}
+div.search {
+    /*color: #FFF;*/
+    font-weight: blod;
+    padding: 6px 20px;
+    margin-top: 15px;
+}
+div.search { border: 2px outset #d2d2d2; }
+div.search:hover, div.search:focus {
+    box-shadow: 0 0 1px rgba(0,0,0, .75);
+    -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
+}
+.margin1 { margin-left: 8px; }
+.margin2 { margin-top: 5px; }
+.btn1 {
+    margin-right: 5px;
+    padding: 3px 15px;
+    background: linear-gradient(#FFF, #e5e5e5);
+    -pie-background: linear-gradient(#FFF, #e5e5e5);
+    border: 1px solid #d2d2d2;
+    border-radius: 3px;
+    z-index: 1000;
+    position: relative;
+}
+.btn1:hover {
+    background: linear-gradient(#e5e5e5, #FFF);
+    -pie-background: linear-gradient(#e5e5e5, #FFF);
+}
+.btn2 {
+    border: 1px solid #d2d2d2;
+    border-radius: 2px;
+    padding: 3px 8px;
+    margin: 0 8px 8px 0;
+}
+.btn2:hover { border: 1px solid #ef841b; }
+.btn3, .btn4 { width: 11px; height: 11px; margin-left: 5px; } /* Delete */
+.btn3 { background: url(../images/MailStyle.png) -120px -89px no-repeat; } /* Gray */
+.btn4 { background: url(../images/MailStyle.png) -120px -98px no-repeat; margin-top: 3px; }  /* White */
+.btn3:hover, .btn4:hover { background: url(../images/MailStyle.png) -131px -89px no-repeat; } /* Orange */
+.btn5 { background: #d2d2d2; text-align: center; }
+.btn5.style1 { width: 50px; padding: 8px 12px; margin-bottom: 15px; }
+.btn5:hover { background: #0b9caf; color: #FFF; }
+.btn5.style2 {
+    width: 150px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #d2d2d2;
+    letter-spacing: 0.06em;
+    font-weight: bold;
+}
+.btn5.style2:hover {
+    background: #FFF;
+    border: 1px solid #0b9caf;
+    color: #0b9caf;
+}
+.marks { background: url(../images/marks.png) no-repeat; }
+.btn4, .btn5.style1 {
+    float: right;
+}
+.marks, div.search,
+.btn1, .btn2, .btn3, .btn4,
+.btn5.style1, .btn5.style2 {
+    display: inline-block;
+}
+div.search, .btn1, .btn2, .btn3, .btn4, .btn5 { cursor: pointer; }
+div.search, .btn1, .btn1:hover, .btn2 { behavior: url(PIE.htc); }
+
+/*=====================================================
+   6. PopupDiv 不確定是否有使用20151002
+=====================================================*/
+.PopupDiv {
+    border: 1px solid #393939;
+    z-index: 9999;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 14px;
+    line-height: 24px;
+}
+.PopupDiv .title {
+    display: block;
+    color: #FFF;
+    font-size: 16px;
+    background: url(../images/header_2.png) repeat-x 0 0;
+    margin: -15px -15px 15px -15px;
+    padding: 5px 15px 4px 15px;
+}
+.PopupDiv select { margin-top: 5px; }
+.PopupDiv textarea {
+    width: 365px;
+    height: 50px;
+    border: 1px solid #d2d2d2;
+    resize: none;
+    margin: 5px 0 12px 0;
+}
+.PopupDivBtn { float: right; margin-right: 2px; }
+.noticetext, .noticetext-sign { font-size: 14px; color: #ff0000; }
+.noticetext-sign { margin-right: 2px; }
+.PopupDiv.style1, .PopupDiv.style2 {
+    padding: 15px;
+    color: #333;
+}
+.PopupDiv.style1 { width: 400px; height: 245px; margin: -125px 0 0 -200px; }
+.PopupDiv.style2 { width: 400px; height: 200px; margin: -100px 0 0 -200px; }
+.PopupDiv.style2 select { margin-bottom: 5px; }
+.PopupDiv.style2 textarea {
+    width: 392px;
+    height: 62px;
+    border: 1px solid #d2d2d2;
+    resize: none;
+    margin: 5px 0 12px 0;
+    display: block;
+}
+.PopupDiv span.text {
+    display: inline-block;
+    width: 80px;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    line-height: 32px;
+}
+.PopupDiv .btn4 { margin-top: 8px; }
+.PopupDiv.style1 .btn1 { padding: 2px 10px; margin: 0 8px 8px 0;}
+

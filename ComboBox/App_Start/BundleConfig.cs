@@ -38,6 +38,15 @@ namespace ComboBox
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new StyleBundle("~/Styles/Column").Include(
+                "~/Styles/AuthModel.Areas.Admin.Content.reset.css",
+                "~/Styles/AuthModel.Areas.Admin.Content.header_and_footer.css",
+                "~/Styles/TecrmBackweb_Common.css",
+                "~/Styles/TecrmBackweb_DataMining.css"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/ComboBox").Include(
+                        "~/Scripts/ComboBox.js"));
         }
     }
 }

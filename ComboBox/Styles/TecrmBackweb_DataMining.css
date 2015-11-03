@@ -1,0 +1,171 @@
+@charset "utf-8";
+/*
+* @data 2015-10-15
+* Author: Green
+--------------------------------
+   1.
+   2.
+
+--------------------------------
+*/
+
+/* 置頂搜尋框 */
+.header_search { width: 280px; height: 32px; background: #fff; border: 1px solid #b9bcbf; padding: 0 10px 0 15px; margin: -15px 50% 10px 50%; right: -294px; position: relative; -webkit-border-radius: 30px; -moz-border-radius: 30px; border-radius: 30px;}
+.header_search input[type="text"] { width: 200px; height: 20px; border: 0; font: normal 1em "Microsoft JhengHei", "Microsoft YaHei", "Arial"; outline: none;}
+.header_search input[type="button"] { height: 26px; border: none; background: #fff; margin-top: 3px; width: 4em; border-left: solid 1px #ddd;}
+.header_search input[type="button"]:hover { color: #3ea2af;}
+
+/* 首頁主內容 */
+.config_header { height: 40px; padding: 10px 10px; border-bottom: solid 1px #ddd;}
+.config_header h2 { color: #3ea2af; font: normal 20px/40px "Microsoft JhengHei", "Microsoft YaHei", "Arial"; float: left;}
+
+/* 首頁功能按鈕 */
+.config_header ul.edit { float: right;}
+.config_header ul.edit>li { display: inline-block; position: relative;}
+
+
+/* 功能按鈕+篩選編輯工具 次選單*/
+ul.add_options { background: #fff; border: solid 1px #ddd; position: absolute; white-space: nowrap; top: 40px; left: -5px; z-index: 300;}
+ul.add_options li { display: block; padding: 10px 20px 10px 15px; text-decoration: none; cursor: pointer;}
+ul.add_options li:hover { background: #ef9740; color: #fff;}
+ul.add_options li:hover a { color: #fff;}
+ul.add_options li a { display: block; text-decoration: none; cursor: pointer;}
+ul.add_options li a:hover { background: #ef9740; color: #fff;}
+
+.config_director { display: block; width: 250px; min-height: 614px; float: left; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; -ms-box-sizing: border-box; -sand-box-sizing: border-box;}
+.config_director .treemenu { height: 553px; width: 250px;}
+
+.config_list { display: block; width: 950px; min-height: 614px; border-left: solid 1px #ddd; overflow: hidden; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; -ms-box-sizing: border-box; -sand-box-sizing: border-box;}
+.config_list .no_match { padding: 15px; color: #ed851c;}
+.config_list .no_match::before { content: "!"; display: inline-block; margin-right: 5px; width: 20px; height: 20px; background: #ed851c; color: #fff; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; vertical-align: middle; text-align: center;}
+
+/* 首頁設定檔表格 */
+.config_list .te_table_scroll { height: 510px; overflow-y: scroll;}
+.config_list table.te_table_list { table-layout:fixed; word-break:break-all;}
+.config_list table.te_table_list tr td { font-size: 12px; }
+.config_list table.te_table_list tr td p { white-space:normal; line-height: 1.5em; max-height: 4.5em; overflow : hidden; text-overflow: ellipsis; -webkit-line-clamp: 3; -webkit-box-orient: vertical; -line-clamp: 3; -webkit-line-clamp: 3; display: -webkit-box;/*不要超過3行，IE無效*/}
+.config_list table.te_table_list tr td:first-of-type { font-size: 14px;}
+
+/* 首頁POPUP */
+.popup_box.home_move { width: 480px; left: -240px;}
+.popup_box.home_move .treemenu { border: solid 1px #ccc; min-height: 200px;}
+
+/* 篩選編輯工具列 */
+.data_toolbar { display: block; padding: 10px; overflow: hidden;}
+.data_toolbar input {margin: 0; border: solid 1px #fff; font-size: 16px; padding: 0 10px; color: #666;}
+.data_toolbar input:hover { border: solid 1px #ccc;}
+.data_toolbar input:focus { border: solid 1px #b2dadf;}
+.data_toolbar ul.data_toolbar_group { display: block; float: right;}
+.data_toolbar ul.data_toolbar_group>li { display: inline-block; border-right: solid 1px #ddd; margin: 0 5px 0 0; padding: 0 5px 0 0;}
+.data_toolbar ul.data_toolbar_group>li:last-of-type { border: 0; margin: 0; padding: 0;}
+.data_toolbar ul.data_toolbar_group li ul.data_toolbar_btns { padding-right: 5px;}
+.data_toolbar ul.data_toolbar_group li ul.data_toolbar_btns>li { display: inline-block; position: relative;}
+
+/* 篩選EXCEL頁籤 */
+.data_excel .data_tabs_bar { overflow: hidden; height: 32px; padding: 0 10px;}
+.data_excel ul.data_tabs_arr { float: left; margin: 0 3px;}
+.data_excel ul.data_tabs_arr li { margin: 5px 0; width: 20px; height: 20px; background-size: 50px; border: solid 1px #fff;}
+.data_excel ul.data_tabs_arr li:hover { border: solid 1px #ddd;}
+.data_excel ul.data_tabs_arr li.te_com_btn_edit_left  { background-position: 0px -250px; margin-right: -3px;}
+.data_excel ul.data_tabs_arr li.te_com_btn_edit_right { background-position: 0px -250px;}
+.data_excel ul.data_tabs_arr li.te_com_btn_edit_left:hover  { background-position: 25px -250px;}
+.data_excel ul.data_tabs_arr li.te_com_btn_edit_right:hover { background-position: 25px -250px;}
+.data_excel ul.data_tabs { width: 1128px; height: 32px; float: left; margin: 0; padding-top: 2px;}
+.data_excel ul.data_tabs li { float: left; height: 30px; line-height: 30px; padding: 0 15px; text-align: center; background: #ddd; color: #a19e9b; margin: 0 2px 0 0; cursor: pointer; border-radius: 3px 3px 0 0; -moz-border-radius: 3px 3px 0 0; -webkit-border-radius: 3px 3px 0 0;}
+.data_excel ul.data_tabs li:hover { margin-top: -2px; height: 32px;}
+.data_excel ul.data_tabs li input[type="text"] { background: none; border: none; display: none;}
+.data_excel ul.data_tabs li a { display: block; text-decoration: none; color: #555;}
+.data_excel ul.data_tabs li.data_tab_current { background: #8bc7cf; color: #fff;}
+.data_excel ul.data_tabs li.data_tab_current a { text-decoration: none; color: #fff;}
+.data_excel ul.data_tabs li.data_tab_add { background: #a19e9b; width: 36px; padding: 0; position: relative;}
+.data_excel ul.data_tabs li.data_tab_add:hover { background: #8bc7cf;}
+.data_excel ul.data_tabs li.data_tab_add::before { content: ""; display: block; width: 14px; height: 2px; left: 11px; top: 14px; background: #fff; position: absolute;}
+.data_excel ul.data_tabs li.data_tab_add::after  { content: ""; display: block; width: 2px; height: 14px; left: 17px; top: 8px; background: #fff; position: absolute;}
+
+
+/* 篩選EXCEL表格 */
+.data_excel .te_table_scroll { display: block; width: 1180px; height: 510px; margin: 0 10px; border-top: solid 1px #ddd; border-left: solid 1px #ddd; overflow-y: scroll; overflow-x: scroll;}
+.data_excel .te_table_scroll .message_bar { position: absolute; left: 10px; bottom: 0; background: #fff; padding: 5px 10px; z-index: 100; border: solid 1px #ddd; border-bottom: none; color: #65b5bf; font-size: 12px; border-radius: 0 5px 0 0; -moz-border-radius: 0 5px 0 0; -webkit-border-radius: 0 5px 0 0;}
+.data_excel table.te_table_list {word-break:nowrap; white-space: nowrap; /*border: solid 1px #ddd; */}
+.data_excel table.te_table_list tr.title th { background: #f2f2f2; color: #a19e9b; font-size: 16px; text-align: center; border-right: solid 1px #b2dadf;}
+.data_excel table.te_table_list tr td { padding: 3px 10px; border: solid 1px #ddd;}
+.data_excel table.te_table_list tr td.count,
+.data_excel table.te_table_list tr th.count{ min-width: 50px; background: #f2f2f2; color: #a19e9b; text-align: center; border-right: double 3px #b2dadf; border-bottom: solid 1px #b2dadf; border-left: 0;}
+.data_excel table.te_table_list tr.title th.count { border-bottom: double 3px #b2dadf;}
+.data_excel .data_filter { display: inline-block; margin-left: 6px; width: 18px; height: 18px; background: #c7c5c3; vertical-align: bottom; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; cursor: pointer; position: relative;}
+.data_excel .data_filter:hover { background: #8bc7cf;}
+.data_excel .data_filter::before{ content: ""; display: block; width: 8px; height: 2px; left: 7px; top: 8px; background: #fff; position: absolute; transform:rotate(135deg); -moz-transform:rotate(135deg); -webkit-transform:rotate(135deg); -ms-transform:rotate(135deg); -sand-transform:rotate(135deg);}
+.data_excel .data_filter::after { content: ""; display: block; width: 8px; height: 2px; left: 3px; top: 8px; background: #fff; position: absolute; transform:rotate(45deg); -moz-transform:rotate(45deg); -webkit-transform:rotate(45deg); -ms-transform:rotate(45deg); -sand-transform:rotate(45deg);}
+
+/* 篩選表格頁POPUP */
+.popup_box.sheet_filter { width: 760px; left: -380px;}
+.popup_box.sheet_filter .popup_main { overflow: hidden;}
+.popup_box.sheet_filter h4 { padding: 0px 15px 6px 15px;}
+.popup_box.sheet_filter h4.title_column_setting::before { content: ""; display: inline-block; width: 40px; height: 40px; background: url(../images/te_com_btn_excel.png) -50px 0px; cursor: pointer; vertical-align: middle; margin-top: -9px; margin-left: -5px;}
+.popup_box.sheet_filter h4.title_intersection::before   { content: ""; display: inline-block; width: 40px; height: 40px; background: url(../images/te_com_btn_excel.png) -50px -50px; cursor: pointer; vertical-align: middle; margin-top: -9px; margin-left: -5px;}
+.popup_box.sheet_filter h4.title_remove::before         { content: ""; display: inline-block; width: 40px; height: 40px; background: url(../images/te_com_btn_excel.png) -50px -100px; cursor: pointer; vertical-align: middle; margin-top: -9px; margin-left: -5px;}
+.popup_box.sheet_filter h4.title_merge::before          { content: ""; display: inline-block; width: 40px; height: 40px; background: url(../images/te_com_btn_excel.png) -50px -150px; cursor: pointer; vertical-align: middle; margin-top: -9px; margin-left: -5px;}
+.popup_box.sheet_filter h4.title_distinct::before       { content: ""; display: inline-block; width: 40px; height: 40px; background: url(../images/te_com_btn_excel.png) -50px -200px; cursor: pointer; vertical-align: middle; margin-top: -9px; margin-left: -5px;}
+.popup_box.sheet_filter h5.filter_step { color: #3ea2af; font-size: 18px; padding: 0; margin-bottom: 10px;}
+.popup_box.sheet_filter h5.filter_step::before { content: ""; display: inline-block; width: 32px; height: 32px; font: bold 24px/32px Arial; margin-right: 10px; background: #b2dadf; color: #fff; text-align: center; vertical-align: middle; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%;}
+.popup_box.sheet_filter h5.filter_step1::before { content: "1";}
+.popup_box.sheet_filter h5.filter_step2::before { content: "2";}
+.popup_box.sheet_filter h5.filter_step3::before { content: "3";}
+.popup_box.sheet_filter h5.filter_step4::before { content: "4";}
+
+.popup_box.sheet_filter .column_wrap { width: 340px; float: left;}
+.popup_box.sheet_filter .column_wrap h5 { display: inline-block;}
+.popup_box.sheet_filter .column_wrap ul li { padding: 3px 0; padding-left: 16px; cursor: default;}
+.popup_box.sheet_filter .column_wrap ul li:hover {background: #f2f2f2;}
+.popup_box.sheet_filter .column_wrap ul li.selected { background: #ebf6f7;}
+
+.popup_box.sheet_filter .column_search { border: solid 1px #ddd; border-bottom: double 3px #b2dadf; height: 35px}
+.popup_box.sheet_filter .column_search input[type="text"]{ width: 280px; border: 0; background: none; font-size: 14px; font-style: italic;}
+.popup_box.sheet_filter .column_search .search_icon { display: block; width: 35px; height: 35px; float: right; cursor: pointer; position: relative;}
+.popup_box.sheet_filter .column_search .search_icon::before{content: ""; display: block; position: absolute; width: 15px; height: 3px; left: 14px; top: 21px; background: #a19e9b; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; transform:rotate(45deg); -moz-transform:rotate(45deg); -webkit-transform:rotate(45deg); -ms-transform:rotate(45deg); -sand-transform:rotate(45deg);}
+.popup_box.sheet_filter .column_search .search_icon::after {content: ""; display: block; position: absolute; width: 11px; height: 11px; left: 7px; top: 7px; background: #fff; border: solid 3px #a19e9b; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%;}
+
+
+.popup_box.sheet_filter .column_wrap select { height: auto; width: 340px; height: 100%; margin: 0; padding: 0 0 0 10px; border: 0; font-size: 14px; color: #555;}
+.popup_box.sheet_filter .column_wrap select optgroup { color: #a6958b; padding: 0 0 5px 17px; margin: 10px 0; position: relative; }
+.popup_box.sheet_filter .column_wrap select optgroup::before { content: ""; display: block; left: 0px; top: 6px; border-left: 7px solid transparent; border-top: 7px solid #a19e9b; border-right: 7px solid transparent; position: absolute;}
+.popup_box.sheet_filter .column_wrap select option { color: #555; padding: 4px 0;}
+.popup_box.sheet_filter .column_wrap select option:first-of-type { border-top: dotted 1px #ddd; margin-top: 10px; padding-top: 10px;}
+.popup_box.sheet_filter .column_wrap select option:hover { background:#f2f2f2  url(../images/option_bg_g.png) repeat;}
+.popup_box.sheet_filter .column_wrap select option:checked { background:#65b5bf url(../images/option_bg_b.png) repeat; color: #fff;}
+
+
+.popup_box.sheet_filter .column_wrap .column_current select { width: 340px; padding: 10px 0 10px 0px;}
+.popup_box.sheet_filter .column_wrap .column_current select option { padding-left: 10px;}
+.popup_box.sheet_filter .column_wrap .column_current select option:first-of-type { border: none; margin-top: 0px; padding-top: 4px;}
+
+
+.popup_box.sheet_filter .column_current{ /*padding: 10px 15px;*/ border: solid 1px #ddd; height: 288px; /*overflow: auto;*/ clear: all;}
+.popup_box.sheet_filter .column_all    { /*padding: 10px 15px;*/ border: solid 1px #ddd; height: 250px; /*overflow: auto;*/ clear: all; border-top: 0;}
+.popup_box.sheet_filter .column_all dl dt { color: #a6958b; border-bottom: dotted 1px #ddd; margin: 0 0 10px 20px; padding-bottom: 5px;}
+.popup_box.sheet_filter .column_all dl dt::before { content: ""; display: inline-block; margin-left: -20px; margin-right: 8px; border-left: 7px solid transparent; border-top: 7px solid #a19e9b; border-right: 7px solid transparent;}
+.popup_box.sheet_filter .column_all dl dd ul { margin: 0 0 15px 20px;}
+
+.popup_box.sheet_filter .column_arr_l_and_r { width: 50px; float: left; margin-top: 90px;}
+.popup_box.sheet_filter .column_arr_l_and_r .arr_l_to_r { transform:rotate(90deg); -moz-transform:rotate(90deg); -webkit-transform:rotate(90deg); -ms-transform:rotate(90deg); -sand-transform:rotate(90deg); margin-bottom: 70px;}
+.popup_box.sheet_filter .column_arr_l_and_r .arr_r_to_l { transform:rotate(270deg); -moz-transform:rotate(270deg); -webkit-transform:rotate(270deg); -ms-transform:rotate(270deg); -sand-transform:rotate(270deg);}
+.popup_box.sheet_filter .column_arr_u_and_d { float: right;}
+.popup_box.sheet_filter .column_arr_u_and_d .te_com_btn_edit_up   { height: 26px; margin-top: -7px;}
+.popup_box.sheet_filter .column_arr_u_and_d .te_com_btn_edit_down { height: 26px; margin-top: -7px;}
+
+.popup_box.sheet_filter .popup_hint { padding: 5px 20px 20px 20px; min-height: 120px; margin-bottom: 20px; background: #f2f2f2; border: solid 1px #ddd; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+.popup_box.sheet_filter ul.options_list { margin-left: 40px;}
+.popup_box.sheet_filter ul.options_list li { margin-bottom: 5px;}
+.popup_box.sheet_filter .step_area_1 { display: block; width: 48%; min-height: 150px; float: left; margin-bottom: 15px;}
+.popup_box.sheet_filter .step_area_2 { display: block; width: 48%; min-height: 150px; float: left; margin-bottom: 20px; padding-left: 15px; border-left: solid 2px #d8ecef; position: relative;}
+.popup_box.sheet_filter .step_area_2::before { content: ""; left: 0; top: 50%; margin-top: -4px; border-top: 8px solid transparent; border-left: 8px solid #d8ecef; border-bottom: 8px solid transparent; position: absolute;}
+.popup_box.sheet_filter .step_area_1 select { max-width: 75%; margin-left: 40px;}
+
+
+/* 覆蓋JQUERY UI */
+.treemenu ul:focus { outline: none;}
+
+
+.pq-select-popup-cont .ui-widget-content { border: solid 1px #ddd;}
+.pq-select-popup-cont .ui-corner-all { border-radius: 0;}
+.ui-state-default {}

@@ -1,0 +1,143 @@
+@charset "utf-8";
+/*
+* @data 2015-10-15
+* Author: Green
+--------------------------------
+   1.
+   2.
+
+--------------------------------
+*/
+
+/* 基本元件 */
+a {font-family:"微軟正黑體", "微软雅黑", "Microsoft JhengHei", "Microsoft YaHei", "verdana", "Arial"; text-decoration: none; color: #444;}
+a:hover {color: #3ea2af; text-decoration: underline;}
+hr {border:0; height:1px; background:#ddd; margin: 0;}
+
+/* 主內容框架 */
+.body_content { width: 1200px; min-height: 350px; background: #fff; border: solid 1px #ddd; padding: 0; margin: 0 auto; position: relative;}
+
+/* 基本 input select textarea */
+input,textarea,select,button { height: 30px; padding: 0 3px; margin: 3px; border: solid 1px #ccc; color: #444; outline: 0; vertical-align: middle; font-family: "Microsoft JhengHei", "Microsoft YaHei", "Arial"; line-height: 1.4em; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+input[type="button"], input[type="submit"], input[type="reset"],button { cursor: pointer; border: 0;}
+input[type="button"]:disabled, input[type="submit"]:disabled, input[type="reset"]:disabled, button:disabled { background: #ccc; cursor: default;}
+input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; border: 0;}
+input[type="range"] { border: 0;}
+textarea { padding: 3px; vertical-align: top; resize:none;}
+
+
+/* 一般常用按鈕 */
+.te_com_btn_main { height: 34px; text-align: center; background: #ef9740; color: #fff; margin: 0 5px; padding: 0 1em; font: normal 20px/34px "Microsoft JhengHei", "Microsoft YaHei", "Arial"; cursor: pointer;}
+.te_com_btn_main:hover { background: #ed851c;}
+.te_com_btn_sub { height: 30px; text-align: center; background: #3ea2af; color: #fff; margin: 0 5px; padding: 0 1em; font: normal 16px/30px "Microsoft JhengHei", "Microsoft YaHei", "Arial"; cursor: pointer;}
+.te_com_btn_sub:hover { background: #3596a4;}
+.te_com_btn_3rd { height: 22px; background: #a19e9b; color: #fff; margin: 0 5px; padding: 0 0.5em; border-radius: 3px; font: normal 12px/22px "Microsoft JhengHei", "Microsoft YaHei", "Arial"; cursor: pointer;}
+.te_com_btn_3rd:hover { background: #8f8c89;}
+.te_com_btn_main a ,.te_com_btn_sub a , .te_com_btn_3rd a { color: #fff; text-decoration: none;}
+
+
+/* 編輯功能按鈕 */
+.te_com_btn_edit_add_folder{ display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 0px; cursor: pointer;}
+.te_com_btn_edit_add_file  { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -50px; cursor: pointer;}
+.te_com_btn_edit_change    { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -100px; cursor: pointer;}
+.te_com_btn_edit_edit      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -150px; cursor: pointer;}
+.te_com_btn_edit_delete    { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -200px; cursor: pointer;}
+.te_com_btn_edit_copy      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -250px; cursor: pointer;}
+.te_com_btn_edit_save      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -300px; cursor: pointer;}
+.te_com_btn_edit_download  { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -350px; cursor: pointer;}
+.te_com_btn_edit_filter    { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -400px; cursor: pointer;}
+.te_com_btn_edit_up        { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -450px; cursor: pointer;}
+.te_com_btn_edit_down      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -500px; cursor: pointer;}
+.te_com_btn_edit_left      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -500px; cursor: pointer; transform:rotate(90deg); -moz-transform:rotate(90deg); -webkit-transform:rotate(90deg); -ms-transform:rotate(90deg); -sand-transform:rotate(90deg);}
+.te_com_btn_edit_right     { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) 0 -500px; cursor: pointer; transform:rotate(270deg); -moz-transform:rotate(270deg); -webkit-transform:rotate(270deg); -ms-transform:rotate(270deg); -sand-transform:rotate(270deg);}
+.te_com_btn_edit_add_folder:hover{ display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px 0px; cursor: pointer;}
+.te_com_btn_edit_add_file:hover  { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -50px; cursor: pointer;}
+.te_com_btn_edit_change:hover    { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -100px; cursor: pointer;}
+.te_com_btn_edit_edit:hover      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -150px; cursor: pointer;}
+.te_com_btn_edit_delete:hover    { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -200px; cursor: pointer;}
+.te_com_btn_edit_copy:hover      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -250px; cursor: pointer;}
+.te_com_btn_edit_save:hover      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -300px; cursor: pointer;}
+.te_com_btn_edit_download:hover  { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -350px; cursor: pointer;}
+.te_com_btn_edit_filter:hover    { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -400px; cursor: pointer;}
+.te_com_btn_edit_up:hover        { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -450px; cursor: pointer;}
+.te_com_btn_edit_down:hover      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -500px; cursor: pointer;}
+.te_com_btn_edit_left:hover      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -500px; cursor: pointer;}
+.te_com_btn_edit_right:hover     { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_edit.png) -50px -500px; cursor: pointer;}
+
+/* EXCEL功能按鈕 */
+.te_com_btn_edit_column_setting{ display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_excel.png) 0 0px; cursor: pointer;}
+.te_com_btn_edit_intersection  { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_excel.png) 0 -50px; cursor: pointer;}
+.te_com_btn_edit_remove        { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_excel.png) 0 -100px; cursor: pointer;}
+.te_com_btn_edit_merge         { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_excel.png) 0 -150px; cursor: pointer;}
+.te_com_btn_edit_distinct      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_excel.png) 0 -200px; cursor: pointer;}
+.te_com_btn_edit_column_setting:hover{ display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_excel.png) -50px 0px; cursor: pointer;}
+.te_com_btn_edit_intersection:hover  { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_excel.png) -50px -50px; cursor: pointer;}
+.te_com_btn_edit_remove:hover        { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_excel.png) -50px -100px; cursor: pointer;}
+.te_com_btn_edit_merge:hover         { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_excel.png) -50px -150px; cursor: pointer;}
+.te_com_btn_edit_distinct:hover      { display: inline-block; width: 40px; height: 40px; margin: 0 5px; background: url(../images/te_com_btn_excel.png) -50px -200px; cursor: pointer;}
+
+
+/* 功能按鈕 */
+.te_com_btn_back { display: inline-block; width: 25px; height: 25px; background: #8bc7cf; vertical-align: middle; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; position: relative; cursor: pointer;}
+.te_com_btn_back:hover { background: #3ea2af;}
+.te_com_btn_back::before { content: ""; position: absolute; left: 6px; top: 8px;  width: 11px; height: 3px; background: #fff; transform:rotate(315deg); -moz-transform:rotate(315deg); -webkit-transform:rotate(315deg); -ms-transform:rotate(315deg); -sand-transform:rotate(315deg);}
+.te_com_btn_back::after  { content: ""; position: absolute; left: 6px; top: 14px; width: 11px; height: 3px; background: #fff; transform:rotate(45deg); -moz-transform:rotate(45deg); -webkit-transform:rotate(45deg); -ms-transform:rotate(45deg); -sand-transform:rotate(45deg);}
+
+.te_com_btn_add { display: inline-block; width: 25px; height: 25px; background: #999; vertical-align: middle; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; position: relative; cursor: pointer;}
+.te_com_btn_cut { display: inline-block; width: 25px; height: 25px; background: #999; vertical-align: middle; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; position: relative; cursor: pointer;}
+.te_com_btn_add:hover { background: #3ea2af;}
+.te_com_btn_cut:hover { background: #3ea2af;}
+.te_com_btn_cut::before { content: ""; display: block; width: 17px; height: 3px; background: #fff; top: 11px; left: 4px; position: absolute;pointer-events: none;}
+.te_com_btn_add::before { content: ""; display: block; width: 3px; height: 15px; background: #fff; top: 5px; left: 11px; position: absolute;pointer-events: none;}
+.te_com_btn_add::after  { content: ""; display: block; width: 15px; height: 3px; background: #fff; top: 11px; left: 5px; position: absolute;pointer-events: none;}
+
+
+/* 按鈕不作用 */
+.te_com_btn_disable {cursor: default; opacity: 0.25; filter: grayscale(100%); -webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-ms-filter: grayscale(100%);-o-filter: grayscale(100%);}
+.te_com_btn_disable:hover {opacity: 0.25; cursor: default; }
+
+
+/* 彈出視窗用關閉按鈕 */
+.te_popup_btn_close { display: block; width: 20px; height: 20px; border: solid 1px #9ad9e2; position: absolute; right: 5px; top: 5px; cursor: pointer;}
+.te_popup_btn_close::before { content: ""; display: block; width: 18px; height: 1px; background: #65b5bf; top: 10px; left: 1px; position: absolute; transform:rotate(45deg);-moz-transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-sand-transform:rotate(45deg);}
+.te_popup_btn_close::after  { content: ""; display: block; width: 18px; height: 1px; background: #65b5bf; top: 10px; left: 1px; position: absolute; transform:rotate(315deg);-moz-transform:rotate(315deg);-webkit-transform:rotate(315deg);-ms-transform:rotate(315deg);-sand-transform:rotate(315deg);}
+
+
+/* 表格內容超過高度出現捲軸*/
+.te_table_scroll { height: 360px; overflow-y: scroll;}
+
+
+/* table 框架 */
+table.te_table_list { width: 100%;}
+table.te_table_list tr { cursor: default; border-bottom: dotted 1px #ddd;}
+table.te_table_list tr:hover { background: #f2f2f2;}
+table.te_table_list tr.title, table.te_table_list tr.title { background: none;}
+table.te_table_list tr.selected { background: #ebf6f7;}
+table.te_table_list tr td { padding: 15px 10px; position: relative; vertical-align: top;}
+table.te_table_list tr th { padding: 10px 10px; text-align: left; font-weight: normal; color: #3ea2af; border-bottom: double 3px #b2dadf; vertical-align: top;}
+table.te_table_list tr th a { color: #3ea2af;}
+table.te_table_list tr td.folder::before { content: ""; display: block; width: 50px; height: 50px; left: 5px; top: 0; background: url(../images/te_gogoro_icon.png) 3px -245px no-repeat; position: absolute;}
+table.te_table_list tr.disable { opacity: 0.6; cursor: default;}
+
+/* table標題排序用小箭頭 */
+table.te_table_list .sort_up_current   { display: inline-block; margin: 2px 5px; border-left: 4px solid transparent; border-bottom: 7px solid #3ea2af; border-right: 4px solid transparent;}
+table.te_table_list .sort_down_current { display: inline-block; margin: 2px 5px; border-left: 4px solid transparent; border-top: 7px    solid #3ea2af; border-right: 4px solid transparent;}
+table.te_table_list .sort_up           { display: inline-block; margin: 2px 5px; border-left: 4px solid transparent; border-bottom: 7px solid #cccccc; border-right: 4px solid transparent;}
+table.te_table_list .sort_down         { display: inline-block; margin: 2px 5px; border-left: 4px solid transparent; border-top: 7px    solid #cccccc; border-right: 4px solid transparent;}
+
+/* 表格內下載圖標 */
+table.te_table_list tr td .te_table_btn_download { display: block; width: 16px; height: 16px; border-bottom: solid 2px #a19e9b; position: relative; cursor: pointer;}
+table.te_table_list tr td .te_table_btn_download::before { content: ""; display: block; left: 5px; top: 2px; position: absolute; width: 6px; height: 9px; background: #a19e9b;}
+table.te_table_list tr td .te_table_btn_download::after  { content: ""; display: block; left: 1px; top: 8px; position: absolute; border-left: 7px solid transparent; border-top: 7px solid #a19e9b; border-right: 7px solid transparent;}
+
+
+/* popup */
+.popup_wrap { width: 100%; height: 100%; left: 0; top: 0; background: rgba(0,0,0,0.5); overflow: auto; font: normal 14px/1.6em "Microsoft JhengHei", "Microsoft YaHei"; color: #555;  position: fixed; z-index: 900; word-break:break-all;}
+.popup_box { display: block; background: #FFF; position: absolute; margin: 30px 50% 0; top: 0; padding: 15px 0px; box-shadow: 0px 0px 10px rgba(0,0,0,0.3); -moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.3); -webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.3); z-index: 999;}
+.popup_box h4 { color: #3ea2af; padding: 0 15px 15px 15px; font-size: 22px;}
+.popup_box h5 { color: #322d2a; font-size: 18px; margin-bottom: 10px;}
+.popup_box h6 { color: #a6958b;}
+.popup_box h4 dfn { color: #a6958b; font-size: 14px;}
+.popup_box .popup_main { margin: 15px; min-height: 100px;}
+.popup_box .popup_btn { display: block; clear: both; float: none; text-align: center;}
+.popup_box .popup_alert { color: #ed851c;}
