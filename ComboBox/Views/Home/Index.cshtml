@@ -24,19 +24,20 @@
         var $popup = $('.popup_wrap');
         $popup.disableSelection();
 
-//        var $search = $popup.find('.column_search input').on({
-//            keyup: function (event) {
-//                return _onkeyupsearch(event);
-//            }
-//        });
-
         sourceRows = function () {
-            return $('.column_all ul').map(function () {
-                var $ul = $(this);
-                return $ul.children().map(function () {
+            return $('.column_all dl').map(function () {
+                var $dl = $(this);
+                var dl_data = {
+                    dl: $dl,
+                    show: function () { this.dl.show(); },
+                    hide: function () { this.dl.hide(); }
+                };
+
+                var $ul = $dl.find('ul');
+                dl_data.children = $ul.children().map(function () {
                     var $li = $(this);
                     var data = {
-                        parent: $ul,
+                        dl: $dl,
                         li: $li,
                         text: $li.html(),
                         checked: false,
@@ -61,7 +62,9 @@
                         },
                         addback: function () {
                             this.removed = false;
-                        }
+                        },
+                        show: function () { this.li.show(); },
+                        hide: function () { this.li.hide(); }
                     };
                     $li.data('data', data);
 
@@ -70,90 +73,69 @@
                             $(this).data('data').toggleChecked();
                         }
                         else {
-                            $.each(sourceRows, function () { this.setChecked(false); });
+                            $.each(sourceRows, function () {
+                                $.each(this.children, function () {
+                                    this.setChecked(false);
+                                });
+                            });
                             $(this).data('data').setChecked(true);
                         }
                     });
 
                     return data;
                 }).get();
+
+                return dl_data;
             }).get();
         } ();
 
-//        targetRows = function () {
-//            return $('.column_current ul').map(function () {
-//                var $ul = $(this);
-//                return $ul.children().map(function () {
-//                    var $li = $(this);
-//                    var data = {
-//                        checked: false,
-//                        li: $li,
-//                        setChecked: function (flag) {
-//                            this.checked = flag;
-//                            if (flag) {
-//                                this.li.addClass('selected');
-//                            }
-//                            else {
-//                                this.li.removeClass('selected');
-//                            }
-//                        },
-//                        toggleChecked: function () {
-//                            this.checked = !this.checked;
-//                            this.self.toggleClass('selected');
-//                        },
-//                        remove: function () {
-//                            this.li.remove();
-//                            obj.addback();
-//                        }
-//                    };
-//                    $li.data('data', data);
-
-//                    $li.click(function (event) {
-//                        if (event.ctrlKey) {
-//                            $(this).data('data').toggleChecked();
-//                        }
-//                        else {
-//                            $.each(targetRows, function () { this.setChecked(false); });
-//                            $(this).data('data').setChecked(true);
-//                        }
-//                    });
-
-//                    return data;
-//                }).get();
-//            }).get();
-//        } ();
-
     });
+
+    var showGroup = false;
 
     function _onkeyupsearch(event) {
         var $input = $(event.target),
             val = $.trim($input.val()).toUpperCase();
 
-        for (var idx in sourceRows) {
-            var row = sourceRows[idx],
-                text = row.text.toUpperCase(),
-                index = text.indexOf(val);
+        for (var i in sourceRows) {
+            var group = sourceRows[i];
+            group.show();
 
-            row.setChecked(false);
-            if (row.removed) {
-                row.li.hide();
+            var cnt = 0;
+            for (var j in group.children) {
+                var row = group.children[j];
+                    text = row.text.toUpperCase(),
+                    index = text.indexOf(val);
+
+                row.setChecked(false);
+                if (row.removed) {
+                    row.hide();
+                }
+                else if (index === -1) {
+                    row.hide();
+                }
+                else {
+                    row.show();
+                    cnt++;
+                }
             }
-            else if (index === -1) {
-                row.li.hide();
-            }
-            else {
-                row.li.show();
-            }
+            if (showGroup || cnt > 0)
+                group.show();
+            else
+                group.hide();
         }
     }
 
     function rightFun() {
         console.log("rightFun");
         for (var i in sourceRows) {
-            var data = sourceRows[i];
-            if (data.checked) {
-                addTarget(data)
-                data.remove();
+            var group = sourceRows[i];
+            for (var j in group.children) {
+                var data = group.children[j];
+                if (data.checked) {
+                    addTarget(data)
+                    data.remove();
+                }
             }
         }
     }
@@ -232,15 +214,16 @@
             q = data.checked;
             data.mo = data.checked ? p - 1 : p;
             data.so = i;
+            data.co = data.checked ? 0 : 1;
         }
 
         targetRows.sort(function (a, b) {
             if (a.mo != b.mo)
                 return a.mo - b.mo;
-            else if (a.checked === b.checked)
-                return a.so - b.so;
+            else if (a.co != b.co)
+                return a.co - b.co;
             else
-                return (a.checked ? -1 : 1);
+                return a.so - b.so;
         });
 
         refreshTarget();
@@ -256,16 +239,16 @@
             q = data.checked;
             data.mo = data.checked ? p + 1 : p;
             data.so = i;
+            data.co = data.checked ? 1 : 0;
         }
 
         targetRows.sort(function (a, b) {
             if (a.mo != b.mo)
                 return a.mo - b.mo;
-            else if (a.checked === b.checked)
-                return a.so - b.so;
+            else if (a.co != b.co)
+                return a.co - b.co;
             else
-                return (a.checked ? 1 : -1);
-
+                return a.so - b.so;
         });
 
         refreshTarget();
