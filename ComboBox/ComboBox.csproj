@@ -206,6 +206,8 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\te_com_btn_edit.png" />
+    <Content Include="Images\te_com_btn_excel.png" />
     <Content Include="Scripts\ComboBox.js" />
     <Content Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

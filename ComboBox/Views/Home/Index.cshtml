@@ -24,21 +24,104 @@
         var $popup = $('.popup_wrap');
         $popup.disableSelection();
 
-        window.allRows = $popup.find('.column_all li').click(function (event) {
-            if (event.ctrlKey) {
-                $(this).toggleClass('selected');
-            }
-            else {
-                $('.selected').removeClass('selected');
-                $(this).addClass('selected');
-            }
-        });
+//        var $search = $popup.find('.column_search input').on({
+//            keyup: function (event) {
+//                return _onkeyupsearch(event);
+//            }
+//        });
 
-        var $search = $popup.find('.column_search input').on({
-            keyup: function (event) {
-                return _onkeyupsearch(event);
-            }
-        });
+        sourceRows = function () {
+            return $('.column_all ul').map(function () {
+                var $ul = $(this);
+                return $ul.children().map(function () {
+                    var $li = $(this);
+                    var data = {
+                        parent: $ul,
+                        li: $li,
+                        text: $li.html(),
+                        checked: false,
+                        setChecked: function (flag) {
+                            this.checked = flag;
+                            if (flag) {
+                                this.li.addClass('selected');
+                            }
+                            else {
+                                this.li.removeClass('selected');
+                            }
+                        },
+                        toggleChecked: function () {
+                            this.checked = !this.checked;
+                            this.li.toggleClass('selected');
+                        },
+                        removed: false,
+                        remove: function () {
+                            this.removed = true;
+                            this.checked = false;
+                            this.li.hide();
+                        },
+                        addback: function () {
+                            this.removed = false;
+                        }
+                    };
+                    $li.data('data', data);
+
+                    $li.click(function (event) {
+                        if (event.ctrlKey) {
+                            $(this).data('data').toggleChecked();
+                        }
+                        else {
+                            $.each(sourceRows, function () { this.setChecked(false); });
+                            $(this).data('data').setChecked(true);
+                        }
+                    });
+
+                    return data;
+                }).get();
+            }).get();
+        } ();
+
+//        targetRows = function () {
+//            return $('.column_current ul').map(function () {
+//                var $ul = $(this);
+//                return $ul.children().map(function () {
+//                    var $li = $(this);
+//                    var data = {
+//                        checked: false,
+//                        li: $li,
+//                        setChecked: function (flag) {
+//                            this.checked = flag;
+//                            if (flag) {
+//                                this.li.addClass('selected');
+//                            }
+//                            else {
+//                                this.li.removeClass('selected');
+//                            }
+//                        },
+//                        toggleChecked: function () {
+//                            this.checked = !this.checked;
+//                            this.self.toggleClass('selected');
+//                        },
+//                        remove: function () {
+//                            this.li.remove();
+//                            obj.addback();
+//                        }
+//                    };
+//                    $li.data('data', data);
+
+//                    $li.click(function (event) {
+//                        if (event.ctrlKey) {
+//                            $(this).data('data').toggleChecked();
+//                        }
+//                        else {
+//                            $.each(targetRows, function () { this.setChecked(false); });
+//                            $(this).data('data').setChecked(true);
+//                        }
+//                    });
+
+//                    return data;
+//                }).get();
+//            }).get();
+//        } ();
 
     });
 
@@ -46,38 +129,162 @@
         var $input = $(event.target),
             val = $.trim($input.val()).toUpperCase();
 
-        for (var i = 0, len = allRows.length; i < len; i++) {
-            var rowData = $(allRows[i]),
-                text = rowData.html().toUpperCase(),
-                indx = text.indexOf(val);
+        for (var idx in sourceRows) {
+            var row = sourceRows[idx],
+                text = row.text.toUpperCase(),
+                index = text.indexOf(val);
 
-            rowData.searchIndx = null;
-            if (indx === -1) {
-                rowData.hide();
+            row.setChecked(false);
+            if (row.removed) {
+                row.li.hide();
             }
-            //            else if (contain === false && indx > 0) {
-            //                rowData.hide();
-            //            }
+            else if (index === -1) {
+                row.li.hide();
+            }
             else {
-                rowData.show();
-                rowData.searchIndx = indx;
+                row.li.show();
             }
         }
     }
 
     function rightFun() {
         console.log("rightFun");
-        $(".column_all li.selected").appendTo(".column_current ul");
+        for (var i in sourceRows) {
+            var data = sourceRows[i];
+            if (data.checked) {
+                addTarget(data)
+                data.remove();
+            }
+        }
+    }
+
+    function addTarget(obj, checked) {
+        var $li = $('<li>').attr('id', obj.li.attr('id')).append(obj.text);
+
+        $(".column_current ul").append($li);
+
+        var data = {
+            checked: false,
+            li: $li,
+            text: obj.text,
+            setChecked: function (flag) {
+                this.checked = flag;
+                if (flag) {
+                    this.li.addClass('selected');
+                }
+                else {
+                    this.li.removeClass('selected');
+                }
+            },
+            toggleChecked: function () {
+                this.checked = !this.checked;
+                this.li.toggleClass('selected');
+            },
+            remove: function () {
+                this.li.remove();
+                obj.addback();
+            }
+        };
+        $li.data('data', data);
+
+        $li.click(function (event) {
+            if (event.ctrlKey) {
+                $(this).data('data').toggleChecked();
+            }
+            else {
+                $.each(targetRows, function () { this.setChecked(false); });
+                $(this).data('data').setChecked(true);
+            }
+        });
+
+        targetRows.push(data);
+
+        if (checked != void 0)
+            data.setChecked(checked);
     }
 
     function leftFun() {
         console.log("leftFun");
-        $(".column_current ul li.selected").appendTo(".column_all");
+        for (var i in targetRows) {
+            var data = targetRows[i];
+            if (data.checked) {
+                data.remove();
+            }
+        }
     }
+
+    function refreshTarget() {
+        $(".column_current ul").html('');
+        var temp = targetRows;
+        targetRows = [];
+        for (var i in temp) {
+            addTarget(temp[i], temp[i].checked);
+        }
+    }
+
+    function upFun() {
+        var p = 0, q = targetRows[0].checked;
+        for (var i = 0, len = targetRows.length; i < len; i++) {
+            var data = targetRows[i];
+            if (!data.checked || data.checked != q) {
+                p++;
+            }
+            q = data.checked;
+            data.mo = data.checked ? p - 1 : p;
+            data.so = i;
+        }
+
+        targetRows.sort(function (a, b) {
+            if (a.mo != b.mo)
+                return a.mo - b.mo;
+            else if (a.checked === b.checked)
+                return a.so - b.so;
+            else
+                return (a.checked ? -1 : 1);
+        });
+
+        refreshTarget();
+    }
+
+    function downFun() {
+        var p = 0, q = targetRows[0].checked;
+        for (var i = 0, len = targetRows.length; i < len; i++) {
+            var data = targetRows[i];
+            if (!data.checked || data.checked != q) {
+                p++;
+            }
+            q = data.checked;
+            data.mo = data.checked ? p + 1 : p;
+            data.so = i;
+        }
+
+        targetRows.sort(function (a, b) {
+            if (a.mo != b.mo)
+                return a.mo - b.mo;
+            else if (a.checked === b.checked)
+                return a.so - b.so;
+            else
+                return (a.checked ? 1 : -1);
+
+        });
+
+        refreshTarget();
+    }
+
+    function getResult() {
+        var ret = [];
+        $.each(targetRows, function () {
+            ret.push(this.li.attr('id'));
+        });
+        return ret;
+    }
+
+    var sourceRows = [];
+    var targetRows = [];
 </script>
 </head>
     <!-- 彈出視窗begin -->
-    <div class="popup_wrap" id='aaalll'>
+    <div class="popup_wrap">
         <div class="popup_box sheet_filter">
             <span class="te_popup_btn_close" title="close"></span>
             <h4 class="title_column_setting">欄位設定 <dfn>按住Ctrl可以複選</dfn></h4>
@@ -87,18 +294,18 @@
                     <h5>所有欄位</h5>
                     <div class="column_search">
                         <input type="text" placeholder="輸入欲搜尋欄位">
-                        <div class="search_icon"></div>
+                        <div class="search_icon" onclick="_onkeyupsearch({target:$(this).prev()})"></div>
                     </div>
                     <div class="column_all">
                         <dl>
                             <dt>會員資料</dt>
                             <dd>
                                 <ul>
-                                    <li>會員種類1</li>
-                                    <li>會員姓名1</li>
-                                    <li>會員生日2</li>
-                                    <li>會員手機3</li>
-                                    <li>縣市5</li>
+                                    <li id='1'>會員種類1</li>
+                                    <li id='2'>會員姓名1</li>
+                                    <li id='3'>會員生日2</li>
+                                    <li id='4'>會員手機3</li>
+                                    <li id='5'>縣市5</li>
                                 </ul>
                             </dd>
                         </dl>
@@ -106,9 +313,9 @@
                             <dt>訂單資料</dt>
                             <dd>
                                 <ul>
-                                    <li>消費時間233</li>
-                                    <li>總消費金額377</li>
-                                    <li>單筆消費金額610</li>
+                                    <li id='6'>消費時間233</li>
+                                    <li id='7'>總消費金額377</li>
+                                    <li id='8'>單筆消費金額610</li>
                                 </ul>
                             </dd>
                         </dl>
@@ -121,8 +328,8 @@
                 <div class="column_wrap">
                     <h5>目前欄位</h5>
                     <div class="column_arr_u_and_d">
-                        <div class="te_com_btn_edit_up"></div>
-                        <div class="te_com_btn_edit_down"></div>
+                        <div class="te_com_btn_edit_up" onclick="upFun()"></div>
+                        <div class="te_com_btn_edit_down" onclick="downFun()"></div>
                     </div>
                     <div class="column_current">
                         <ul>
@@ -131,7 +338,7 @@
                 </div>
             </div>
             <div class="popup_btn">
-                <input class="te_com_btn_sub" type="button" value="確定">
+                <input class="te_com_btn_sub" type="button" value="確定" onclick="alert(getResult())">
             </div>
         </div>
     </div>
