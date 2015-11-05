@@ -276,6 +276,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Home\ComboBox.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

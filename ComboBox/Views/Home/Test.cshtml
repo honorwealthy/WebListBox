@@ -1,0 +1,10 @@
+﻿@using System.Reflection;
+@model dynamic
+
+@{
+    var Properties = Model.GetType().GetProperties();
+    foreach (PropertyInfo prop in Properties)
+    {
+        var title = prop.Name;
+    }
+}

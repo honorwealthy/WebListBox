@@ -130,13 +130,21 @@
         console.log("rightFun");
         for (var i in sourceRows) {
             var group = sourceRows[i];
+            var cnt = 0;
             for (var j in group.children) {
                 var data = group.children[j];
                 if (data.checked) {
                     addTarget(data)
                     data.remove();
                 }
+                if (data.li.is(':visible'))
+                    cnt++;
             }
+
+            if (showGroup || cnt > 0)
+                group.show();
+            else
+                group.hide();
         }
     }
 
@@ -163,8 +171,8 @@
                 this.li.toggleClass('selected');
             },
             remove: function () {
-                this.li.remove();
                 obj.addback();
+                this.li.remove();
             }
         };
         $li.data('data', data);
