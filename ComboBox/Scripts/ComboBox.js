@@ -8,19 +8,40 @@
 
     var nextId = 1;
 
-    function TEListRow(obj) {
-        this.text = obj.text;
-        this.checked = false;
+    function TEListRow($li, $container) {
+        this.text = $li.text();
+        this.checked = $li.hasClass("selected");
         this.removed = false;
+
+        this.$html = this.buildHtml($li, $container);
     }
 
-    function TEListRowGroup() {
+    TEListRow.prototype = {
+        buildHtml: function($li, $container) {
+            var $rowHtml = $("<li>");
+            $rowHtml.appendTo($container);
+
+            $rowHtml.prop("id", $li.attr('id') || ("TEListRow-" + nextId++));
+            $rowHtml.append($li.text());
+            $rowHtml.toggleClass("selected", $li.hasClass("selected"));
+
+            this.$html = $rowHtml;
+            return this.$html
+        },
+        getHtml: function() {
+            return this.$html;
+        }
+    }
+
+    function TEListRowGroup($ul, $container) {
+        this.$html = this.buildHtml($ul, $container);
+        this.children = [];
     }
 
     TEListRowGroup.prototype = {
-        buildHtml: function($ul, $div) {
+        buildHtml: function($ul, $container) {
             var $groupHtml = $("<dl><dt></dt><dd><ul></ul></dd></dl>");
-            $groupHtml.appendTo($div);
+            $groupHtml.appendTo($container);
 
             var title = $ul.html();
 			var iPos = title.search(/<li/i);
@@ -28,9 +49,38 @@
 				title = title.substring(0, iPos);
 			}
             $groupHtml.find("dt").html(title);
+
+            this.$html = $groupHtml;
+            return this.$html
+        },
+        getHtml: function() {
+            return this.$html;
         }
     };
 
+    function TEListBox(widget) {
+        this.widget = widget;
+    }
+
+    TEListBox.prototype = {
+        load: function () {
+            var $container = this.widget.element;
+            var $source = $container.find("ul");
+            $source.remove();
+
+            this.dataRows = $source.map(function () {
+                var $ul = $(this);
+                var group = new TEListRowGroup($ul, $container);
+                var $contentHtml = group.getHtml().find("ul");
+
+                group.children.push($ul.children().map(function () {
+                    return new TEListRow($(this), $contentHtml);
+                }).get());
+
+                return group;
+            }).get();
+        }
+    };
 /*
 *
 */
@@ -77,38 +127,9 @@
     fn.options = {};
 
     fn._create = function() {
-        this._loadData();
-    };
+        this.listbox = new TEListBox(this);
 
-    fn._loadData = function () {
-        var $div = this.element;
-        var $source = $div.find("ul");
-        $source.remove();
-
-        $source.each(function () {
-            var $ul = $(this);
-
-            var $groupHtml = $("<dl><dt></dt><dd><ul></ul></dd></dl>");
-            $groupHtml.appendTo($div);
-
-            var title = $ul.html();
-			var iPos = title.search(/<li/i);
-			if(iPos >= 0) {
-				title = title.substring(0, iPos);
-			}
-            $groupHtml.find("dt").html(title);
-
-            var $contentHtml = $groupHtml.find("ul");
-            $ul.children().each(function () {
-                var $li = $(this);
-                var $rowHtml = $("<li>");
-                $rowHtml.appendTo($contentHtml);
-
-                $rowHtml.prop("id", $li.attr('id') || nextId++);
-                $rowHtml.append($li.text());
-                $rowHtml.toggleClass("selected", $li.hasClass("selected"));
-            });
-        });
+        this.listbox.load();
     };
 
     //
