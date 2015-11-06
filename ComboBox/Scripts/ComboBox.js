@@ -22,7 +22,7 @@
             this.$html = $("<li>");
             this.$html.appendTo(this.parent.getHtml().find("ul"));
 
-            this.$html.prop("id", $li.attr('id') || ("TEListRow-" + nextId++));
+            this.$html.prop("name", $li.attr("name") || ("TEListRow-" + nextId++));
             this.$html.append($li.text());
             this.$html.toggleClass("selected", $li.hasClass("selected"));
             this.$html.click($.proxy(this.onclick, this));
@@ -161,55 +161,7 @@
         }
     };
 
-    function TEListBoxReceiverRow(parent) {
-        this.parent = parent;
-        this.checked = false;
-        this.text = $li.text();
-        this.checked = $li.hasClass("selected");
-    }
-
-    TEListBoxReceiverRow.prototype = {
-        buildHtml: function($li) {
-            this.$html = $("<li>");
-            this.$html.appendTo(this.parent.$container);
-
-            this.$html.prop("id", $li.attr('id') || ("TEListRow-" + nextId++));
-            this.$html.append($li.text());
-            this.$html.toggleClass("selected", $li.hasClass("selected"));
-
-            return this.$html
-        },
-        setChecked: function(flag) {
-            this.checked = flag;
-            this.$html.toggleClass("selected", flag);
-        },
-        resetAllChecked: function() {
-            this.parent.resetAllChecked();
-        },
-        onclick: function(event) {
-            if (event.ctrlKey) {
-                this.setChecked(!this.checked);
-            }
-            else {
-                this.resetAllChecked();
-                this.setChecked(true);
-            }
-        }
-    };
-
-    function TEListBoxReceiver(widget) {
-        this.widget = widget;
-        this.$container = widget.element;
-        this.dataGroups = [];
-    }
-
-    TEListBoxReceiver.prototype = {
-        load: function() {
-        },
-        addRow: function(data) {
-            this.dataGroups.push(new TEListBoxReceiverRow(this));
-        }
-    };
+    
 
 /*
 * jQuery pulgin TEListBox
@@ -221,7 +173,8 @@
 
             this.listbox.load();
         },
-        addRow: function() {
+        addRow: function(data) {
+            this.listbox.addRow(data);
         },
         //
         gv: function (key) { return this[key]; }
