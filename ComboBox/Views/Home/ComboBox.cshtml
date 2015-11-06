@@ -61,6 +61,8 @@
         $(function () {
             $('.column_all').TEListBox();
             $('.column_search').TEListBoxSearch();
+
+            $('.column_all').TEListBox("registerSearchBox", $('.column_search'));
         });
     </script>
 

@@ -8,24 +8,25 @@
 
     var nextId = 1;
 
-    function TEListRow($li, $container) {
+    function TEListRow(parent ,$li) {
+        this.parent = parent;
         this.text = $li.text();
         this.checked = $li.hasClass("selected");
         this.removed = false;
 
-        this.$html = this.buildHtml($li, $container);
+        this.$html = this.buildHtml($li);
     }
 
     TEListRow.prototype = {
-        buildHtml: function($li, $container) {
-            var $rowHtml = $("<li>");
-            $rowHtml.appendTo($container);
+        buildHtml: function($li) {
+            this.$html = $("<li>");
+            this.$html.appendTo(this.parent.getHtml().find("ul"));
 
-            $rowHtml.prop("id", $li.attr('id') || ("TEListRow-" + nextId++));
-            $rowHtml.append($li.text());
-            $rowHtml.toggleClass("selected", $li.hasClass("selected"));
+            this.$html.prop("id", $li.attr('id') || ("TEListRow-" + nextId++));
+            this.$html.append($li.text());
+            this.$html.toggleClass("selected", $li.hasClass("selected"));
+            this.$html.click($.proxy(this.onclick, this));
 
-            this.$html = $rowHtml;
             return this.$html
         },
         getHtml: function() {
@@ -37,27 +38,39 @@
         },
         show: function(flag) {
             flag ? this.$html.show() : this.$html.hide();
+        },
+        resetAllChecked: function() {
+            this.parent.resetAllChecked();
+        },
+        onclick: function(event) {
+            if (event.ctrlKey) {
+                this.setChecked(!this.checked);
+            }
+            else {
+                this.resetAllChecked();
+                this.setChecked(true);
+            }
         }
     }
 
-    function TEListRowGroup($ul, $container) {
-        this.$html = this.buildHtml($ul, $container);
+    function TEListRowGroup(parent, $ul) {
+        this.parent = parent;
+        this.$html = this.buildHtml($ul);
         this.children = [];
     }
 
     TEListRowGroup.prototype = {
-        buildHtml: function($ul, $container) {
-            var $groupHtml = $("<dl><dt></dt><dd><ul></ul></dd></dl>");
-            $groupHtml.appendTo($container);
+        buildHtml: function($ul) {
+            this.$html = $("<dl><dt></dt><dd><ul></ul></dd></dl>");
+            this.$html.appendTo(this.parent.$container);
 
             var title = $ul.html();
 			var iPos = title.search(/<li/i);
 			if(iPos >= 0) {
 				title = title.substring(0, iPos);
 			}
-            $groupHtml.find("dt").html(title);
+            this.$html.find("dt").html(title);
 
-            this.$html = $groupHtml;
             return this.$html
         },
         getHtml: function() {
@@ -65,30 +78,43 @@
         },
         show: function(flag) {
             flag ? this.$html.show() : this.$html.hide();
+        },
+        resetAllChecked: function() {
+            this.parent.resetAllChecked();
+        },
+        setAllChecked: function(flag) {
+            for (var i in this.children) {
+                this.children[i].setChecked(flag);
+            }
         }
     };
 
     function TEListBox(widget) {
         this.widget = widget;
+        this.$container = this.widget.element;
+        this.dataRows = [];
     }
 
     TEListBox.prototype = {
         load: function () {
-            var $container = this.widget.element;
-            var $source = $container.find("ul");
+            var $source = this.$container.find("ul");
             $source.remove();
 
-            this.dataRows = $source.map(function () {
-                var $ul = $(this);
-                var group = new TEListRowGroup($ul, $container);
-                var $contentHtml = group.getHtml().find("ul");
+            for (var i = 0, iLen = $source.length; i < iLen; i++) {
+                var $ul = $($source[i]);
+                var group = new TEListRowGroup(this, $ul);
 
-                group.children = $ul.children().map(function () {
-                    return new TEListRow($(this), $contentHtml);
-                }).get();
-
-                return group;
-            }).get();
+                var children = $ul.children();
+                for (var j = 0, jLen = children.length; j < jLen; j++) {
+                    group.children.push(new TEListRow(group, $(children[j])));
+                }
+                this.dataRows.push(group);
+            }
+        },
+        resetAllChecked: function() {
+            for (var i in this.dataRows) {
+                this.dataRows[i].setAllChecked(false);
+            }
         }
     };
 
@@ -97,15 +123,16 @@
         this.input = widget.element.find("input");
         this.options = widget.options;
 
-        var that = this;
-        widget.element.find(".search_icon").click(function() { that.search(); });
+        widget.element.find(".search_icon").click($.proxy(this.search, this));
     }
 
     TEListBoxSearch.prototype = {
          search: function() {
-            var val = $.trim(this.input.val()).toUpperCase();
+            if (this.widget.listbox === null)
+                return;
 
-            var sourceRows = $(".column_all").TEListBox("gv", "listbox").dataRows;
+            var val = $.trim(this.input.val()).toUpperCase();
+            var sourceRows = this.widget.listbox.dataRows;
 
             for (var i in sourceRows) {
                 var group = sourceRows[i];
@@ -144,6 +171,11 @@
         },
         _create: function() {
             this.searchbox = new TEListBoxSearch(this);
+            this.listbox = null;
+        },
+        registerDataSource: function(listbox) {
+            if (listbox instanceof TEListBox)
+                this.listbox = listbox;
         },
         //
         gv: function (key) { return this[key]; }
@@ -153,12 +185,15 @@
 /*
 * jQuery pulgin TEListBox
 */
-    $.widget("telexpress.TEListBox", $.ui.mouse, {
+    $.widget("telexpress.TEListBox", {
         options: {},
         _create: function() {
             this.listbox = new TEListBox(this);
 
             this.listbox.load();
+        },
+        registerSearchBox: function($searchBox) {
+            $searchBox.TEListBoxSearch("registerDataSource", this.listbox);
         },
         //
         gv: function (key) { return this[key]; }
