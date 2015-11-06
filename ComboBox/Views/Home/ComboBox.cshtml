@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="column_arr_l_and_r">
-                    <div class="te_com_btn_edit_up arr_l_to_r"></div>
+                    <div class="te_com_btn_edit_up arr_l_to_r" onclick="toright()"></div>
                     <div class="te_com_btn_edit_up arr_r_to_l"></div>
                 </div>
                 <div class="column_wrap">
@@ -63,7 +63,28 @@
             $('.column_search').TEListBoxSearch();
 
             $('.column_all').TEListBox("registerSearchBox", $('.column_search'));
+
+            $('.column_current').TEListBoxReceiver();
         });
+
+        function toright() {
+            var gs = $('.column_all').TEListBox("gv", "listbox").dataGroups;
+            var rs = [];
+            for (var i in gs) {
+                var g = gs[i];
+                for (var j in g.children) {
+                    var row = g.children[j];
+                    if (row.checked) {
+                        rs.push(row);
+                    }
+                }
+            }
+
+            for (var k in rs) {
+                $('.column_current').TEListBoxReceiver("addRow", rs[k]);
+                rs[k].remove();
+            }
+        }
     </script>
 
 </body>

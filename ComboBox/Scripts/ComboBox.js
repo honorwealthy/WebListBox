@@ -50,6 +50,14 @@
                 this.resetAllChecked();
                 this.setChecked(true);
             }
+        },
+        remove: function() {
+            this.removed = true;
+            this.setChecked(false);
+            this.show(false);
+        },
+        addBack: function() {
+            this.removed = false;
         }
     }
 
@@ -161,7 +169,92 @@
         }
     };
 
-    
+    function TEListReceiverRow(parent, $li) {
+        this.parent = parent;
+        this.text = $li.text();
+        this.checked = false;
+
+        this.$html = this.buildHtml($li);
+    }
+
+    TEListReceiverRow.prototype = {
+        buildHtml: function($li) {
+            this.$html = $("<li>");
+            this.$html.appendTo(this.parent.getHtml().find("ul"));
+
+            this.$html.prop("name", $li.attr("name") || ("TEListRow-" + nextId++));
+            this.$html.append($li.text());
+            this.$html.toggleClass("selected", this.checked);
+            this.$html.click($.proxy(this.onclick, this));
+
+            return this.$html
+        },
+        getHtml: function() {
+            return this.$html;
+        },
+        setChecked: function(flag) {
+            this.checked = flag;
+            this.$html.toggleClass("selected", flag);
+        },
+        resetAllChecked: function() {
+            this.parent.resetAllChecked();
+        },
+        onclick: function(event) {
+            if (event.ctrlKey) {
+                this.setChecked(!this.checked);
+            }
+            else {
+                this.resetAllChecked();
+                this.setChecked(true);
+            }
+        }
+    };
+
+    function TEListReceiverRowGroup(parent) {
+        this.parent = parent;
+        this.$html = this.buildHtml();
+        this.children = [];
+    }
+
+    TEListReceiverRowGroup.prototype = {
+        addRow: function(data) {
+            this.children.push(new TEListReceiverRow(this, $(data.getHtml())));
+        },
+        buildHtml: function() {
+            this.$html = $("<dl><dt></dt><dd><ul></ul></dd></dl>");
+            this.$html.appendTo(this.parent.$container);
+
+            return this.$html
+        },
+        getHtml: function() {
+            return this.$html;
+        },
+        resetAllChecked: function() {
+            this.parent.resetAllChecked();
+        },
+        setAllChecked: function(flag) {
+            for (var i in this.children) {
+                this.children[i].setChecked(flag);
+            }
+        }
+    };
+
+    function TEListBoxReceiver(widget) {
+        this.widget = widget;
+        this.$container = widget.element;
+        this.dataGroups = [new TEListReceiverRowGroup(this)];
+    }
+
+    TEListBoxReceiver.prototype = {
+        addRow: function(data) {
+            this.dataGroups[0].addRow(data);
+        },
+        resetAllChecked: function() {
+            for (var i in this.dataGroups) {
+                this.dataGroups[i].setAllChecked(false);
+            }
+        }
+    };
 
 /*
 * jQuery pulgin TEListBox
@@ -170,8 +263,6 @@
         options: {},
         _create: function() {
             this.listbox = new TEListBoxReceiver(this);
-
-            this.listbox.load();
         },
         addRow: function(data) {
             this.listbox.addRow(data);
