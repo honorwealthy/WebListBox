@@ -8,3 +8,18 @@
         var title = prop.Name;
     }
 }
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")
+
+<div>
+    <ul>
+        <li name="10"></li>
+    </ul>
+</div>
+
+<script>
+    $(function () {
+        console.log($('li').attr('name'));
+    });
+</script>
