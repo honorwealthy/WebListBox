@@ -30,6 +30,13 @@
         },
         getHtml: function() {
             return this.$html;
+        },
+        setChecked: function(flag) {
+            this.checked = flag;
+            this.$html.toggleClass("selected", flag);
+        },
+        show: function(flag) {
+            flag ? this.$html.show() : this.$html.hide();
         }
     }
 
@@ -55,6 +62,9 @@
         },
         getHtml: function() {
             return this.$html;
+        },
+        show: function(flag) {
+            flag ? this.$html.show() : this.$html.hide();
         }
     };
 
@@ -73,70 +83,90 @@
                 var group = new TEListRowGroup($ul, $container);
                 var $contentHtml = group.getHtml().find("ul");
 
-                group.children.push($ul.children().map(function () {
+                group.children = $ul.children().map(function () {
                     return new TEListRow($(this), $contentHtml);
-                }).get());
+                }).get();
 
                 return group;
             }).get();
         }
     };
-/*
-*
-*/
-    var showGroup = false;
 
-    function search(event) {
-        var $input = $(event.target);
-        var val = $.trim($input.val()).toUpperCase();
+    function TEListBoxSearch(widget) {
+        this.widget = widget;
+        this.input = widget.element.find("input");
+        this.options = widget.options;
 
-        for (var i in sourceRows) {
-            var group = sourceRows[i];
-            group.show();
-
-            var cnt = 0;
-            for (var j in group.children) {
-                var row = group.children[j];
-                    text = row.text.toUpperCase(),
-                    index = text.indexOf(val);
-
-                row.setChecked(false);
-                if (row.removed) {
-                    row.hide();
-                }
-                else if (index === -1) {
-                    row.hide();
-                }
-                else {
-                    row.show();
-                    cnt++;
-                }
-            }
-            if (showGroup || cnt > 0)
-                group.show();
-            else
-                group.hide();
-        }
+        var that = this;
+        widget.element.find(".search_icon").click(function() { that.search(); });
     }
 
-/*
-* jQuery pulgin
-*/
-    var fn = {};
+    TEListBoxSearch.prototype = {
+         search: function() {
+            var val = $.trim(this.input.val()).toUpperCase();
 
-    fn.options = {};
+            var sourceRows = $(".column_all").TEListBox("gv", "listbox").dataRows;
 
-    fn._create = function() {
-        this.listbox = new TEListBox(this);
+            for (var i in sourceRows) {
+                var group = sourceRows[i];
+                group.show(true);
 
-        this.listbox.load();
+                var cnt = 0;
+                for (var j in group.children) {
+                    var row = group.children[j];
+                    var text = row.text.toUpperCase();
+                    var index = text.indexOf(val);
+
+                    row.setChecked(false);
+                    if (row.removed) {
+                        row.show(false);
+                    }
+                    else if (index === -1) {
+                        row.show(false);
+                    }
+                    else {
+                        row.show(true);
+                        cnt++;
+                    }
+                }
+                group.show((this.options.showGroup || cnt > 0));
+            }
+        }
     };
 
+/*
+* jQuery pulgin TEListBoxSearch
+*/
+
+    $.widget("telexpress.TEListBoxSearch", {
+        options: {
+            showGroup: true
+        },
+        _create: function() {
+            this.searchbox = new TEListBoxSearch(this);
+        },
+        //
+        gv: function (key) { return this[key]; }
+        //
+    });
+
+/*
+* jQuery pulgin TEListBox
+*/
+    $.widget("telexpress.TEListBox", $.ui.mouse, {
+        options: {},
+        _create: function() {
+            this.listbox = new TEListBox(this);
+
+            this.listbox.load();
+        },
+        //
+        gv: function (key) { return this[key]; }
+        //
+    });
+    
     //
-    fn.gv = function (key) { return this[key]; };
     function log(s) { console.log(s); }
     //
-
-    $.widget("telexpress.TEListBox", $.ui.mouse, fn);
 
 } (jQuery));
