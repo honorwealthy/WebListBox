@@ -92,7 +92,7 @@
     function TEListBox(widget) {
         this.widget = widget;
         this.$container = this.widget.element;
-        this.dataRows = [];
+        this.dataGroups = [];
     }
 
     TEListBox.prototype = {
@@ -108,12 +108,12 @@
                 for (var j = 0, jLen = children.length; j < jLen; j++) {
                     group.children.push(new TEListRow(group, $(children[j])));
                 }
-                this.dataRows.push(group);
+                this.dataGroups.push(group);
             }
         },
         resetAllChecked: function() {
-            for (var i in this.dataRows) {
-                this.dataRows[i].setAllChecked(false);
+            for (var i in this.dataGroups) {
+                this.dataGroups[i].setAllChecked(false);
             }
         }
     };
@@ -132,10 +132,10 @@
                 return;
 
             var val = $.trim(this.input.val()).toUpperCase();
-            var sourceRows = this.widget.listbox.dataRows;
+            var sourceGroups = this.widget.listbox.dataGroups;
 
-            for (var i in sourceRows) {
-                var group = sourceRows[i];
+            for (var i in sourceGroups) {
+                var group = sourceGroups[i];
                 group.show(true);
 
                 var cnt = 0;
@@ -160,6 +160,73 @@
             }
         }
     };
+
+    function TEListBoxReceiverRow(parent) {
+        this.parent = parent;
+        this.checked = false;
+        this.text = $li.text();
+        this.checked = $li.hasClass("selected");
+    }
+
+    TEListBoxReceiverRow.prototype = {
+        buildHtml: function($li) {
+            this.$html = $("<li>");
+            this.$html.appendTo(this.parent.$container);
+
+            this.$html.prop("id", $li.attr('id') || ("TEListRow-" + nextId++));
+            this.$html.append($li.text());
+            this.$html.toggleClass("selected", $li.hasClass("selected"));
+
+            return this.$html
+        },
+        setChecked: function(flag) {
+            this.checked = flag;
+            this.$html.toggleClass("selected", flag);
+        },
+        resetAllChecked: function() {
+            this.parent.resetAllChecked();
+        },
+        onclick: function(event) {
+            if (event.ctrlKey) {
+                this.setChecked(!this.checked);
+            }
+            else {
+                this.resetAllChecked();
+                this.setChecked(true);
+            }
+        }
+    };
+
+    function TEListBoxReceiver(widget) {
+        this.widget = widget;
+        this.$container = widget.element;
+        this.dataGroups = [];
+    }
+
+    TEListBoxReceiver.prototype = {
+        load: function() {
+        },
+        addRow: function(data) {
+            this.dataGroups.push(new TEListBoxReceiverRow(this));
+        }
+    };
+
+/*
+* jQuery pulgin TEListBox
+*/
+    $.widget("telexpress.TEListBoxReceiver", {
+        options: {},
+        _create: function() {
+            this.listbox = new TEListBoxReceiver(this);
+
+            this.listbox.load();
+        },
+        addRow: function() {
+        },
+        //
+        gv: function (key) { return this[key]; }
+        //
+    });
 
 /*
 * jQuery pulgin TEListBoxSearch
