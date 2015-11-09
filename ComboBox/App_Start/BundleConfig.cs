@@ -46,6 +46,7 @@ namespace ComboBox
                 "~/Styles/TecrmBackweb_DataMining.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts/ComboBox").Include(
+                        "~/Scripts/TEClass.js",
                         "~/Scripts/ComboBox.js"));
         }
     }

@@ -8,153 +8,153 @@
 
     var nextId = 1;
 
-    function TEListRow(parent ,$li) {
-        this.parent = parent;
-        this.name = $li.attr("name") || ("TEListRow-" + nextId++);
-        this.text = $li.text();
-        this.checked = $li.hasClass("selected");
-        this.removed = false;
+//    function TEListRowOld(parent ,$li) {
+//        this.parent = parent;
+//        this.name = $li.attr("name") || ("TEListRow-" + nextId++);
+//        this.text = $li.text();
+//        this.checked = $li.hasClass("selected");
+//        this.removed = false;
 
-        this.$html = this.buildHtml($li);
-    }
+//        this.$html = this.buildHtml($li);
+//    }
 
-    TEListRow.prototype = {
-        buildHtml: function($li) {
-            this.$html = $("<li>");
-            this.$html.appendTo(this.parent.getHtml().find("ul"));
+//    TEListRowOld.prototype = {
+//        buildHtml: function($li) {
+//            this.$html = $("<li>");
+//            this.$html.appendTo(this.parent.getHtml().find("ul"));
 
-            this.$html.attr("name", this.name);
-            this.$html.append($li.text());
-            this.$html.toggleClass("selected", $li.hasClass("selected"));
-            this.$html.click($.proxy(this.onclick, this));
+//            this.$html.attr("name", this.name);
+//            this.$html.append($li.text());
+//            this.$html.toggleClass("selected", $li.hasClass("selected"));
+//            this.$html.click($.proxy(this.onclick, this));
 
-            return this.$html
-        },
-        getHtml: function() {
-            return this.$html;
-        },
-        setChecked: function(flag) {
-            this.checked = flag;
-            this.$html.toggleClass("selected", flag);
-        },
-        show: function(flag) {
-            flag ? this.$html.show() : this.$html.hide();
-        },
-        resetAllChecked: function() {
-            this.parent.resetAllChecked();
-        },
-        onclick: function(event) {
-            if (event.ctrlKey) {
-                this.setChecked(!this.checked);
-            }
-            else {
-                this.resetAllChecked();
-                this.setChecked(true);
-            }
-        },
-        remove: function() {
-            this.removed = true;
-            this.setChecked(false);
-            this.show(false);
-        },
-        addBack: function(data) {
-            if (data.name === this.name) {
-                this.removed = false;
-            }
-        }
-    }
+//            return this.$html
+//        },
+//        getHtml: function() {
+//            return this.$html;
+//        },
+//        setChecked: function(flag) {
+//            this.checked = flag;
+//            this.$html.toggleClass("selected", flag);
+//        },
+//        show: function(flag) {
+//            flag ? this.$html.show() : this.$html.hide();
+//        },
+//        resetAllChecked: function() {
+//            this.parent.resetAllChecked();
+//        },
+//        onclick: function(event) {
+//            if (event.ctrlKey) {
+//                this.setChecked(!this.checked);
+//            }
+//            else {
+//                this.resetAllChecked();
+//                this.setChecked(true);
+//            }
+//        },
+//        remove: function() {
+//            this.removed = true;
+//            this.setChecked(false);
+//            this.show(false);
+//        },
+//        addBack: function(data) {
+//            if (data.name === this.name) {
+//                this.removed = false;
+//            }
+//        }
+//    }
 
-    function TEListRowGroup(parent, $ul) {
-        this.parent = parent;
-        this.$html = this.buildHtml($ul);
-        this.children = [];
-    }
+//    function TEListRowGroupOld(parent, $ul) {
+//        this.parent = parent;
+//        this.$html = this.buildHtml($ul);
+//        this.children = [];
+//    }
 
-    TEListRowGroup.prototype = {
-        buildHtml: function($ul) {
-            this.$html = $("<dl><dt></dt><dd><ul></ul></dd></dl>");
-            this.$html.appendTo(this.parent.$container);
+//    TEListRowGroupOld.prototype = {
+//        buildHtml: function($ul) {
+//            this.$html = $("<dl><dt></dt><dd><ul></ul></dd></dl>");
+//            this.$html.appendTo(this.parent.$container);
 
-            var title = $ul.html();
-			var iPos = title.search(/<li/i);
-			if(iPos >= 0) {
-				title = title.substring(0, iPos);
-			}
-            this.$html.find("dt").html(title);
+//            var title = $ul.html();
+//			var iPos = title.search(/<li/i);
+//			if(iPos >= 0) {
+//				title = title.substring(0, iPos);
+//			}
+//            this.$html.find("dt").html(title);
 
-            return this.$html
-        },
-        getHtml: function() {
-            return this.$html;
-        },
-        show: function(flag) {
-            flag ? this.$html.show() : this.$html.hide();
-        },
-        resetAllChecked: function() {
-            this.parent.resetAllChecked();
-        },
-        setAllChecked: function(flag) {
-            for (var i in this.children) {
-                this.children[i].setChecked(flag);
-            }
-        },
-        addBack: function(data) {
-            for (var i in this.children) {
-                this.children[i].addBack(data);
-            }
-        },
-        getSelectedRow: function() {
-            var ret = [];
-            for (var i in this.children) {
-                var row = this.children[i];
-                if (row.checked) {
-                    ret.push(row);
-                }
-            }
-            return ret;
-        }
-    };
+//            return this.$html
+//        },
+//        getHtml: function() {
+//            return this.$html;
+//        },
+//        show: function(flag) {
+//            flag ? this.$html.show() : this.$html.hide();
+//        },
+//        resetAllChecked: function() {
+//            this.parent.resetAllChecked();
+//        },
+//        setAllChecked: function(flag) {
+//            for (var i in this.children) {
+//                this.children[i].setChecked(flag);
+//            }
+//        },
+//        addBack: function(data) {
+//            for (var i in this.children) {
+//                this.children[i].addBack(data);
+//            }
+//        },
+//        getSelectedRow: function() {
+//            var ret = [];
+//            for (var i in this.children) {
+//                var row = this.children[i];
+//                if (row.checked) {
+//                    ret.push(row);
+//                }
+//            }
+//            return ret;
+//        }
+//    };
 
-    function TEListBox(widget) {
-        this.widget = widget;
-        this.$container = this.widget.element;
-        this.dataGroups = [];
-    }
+//    function TEListBoxOld(widget) {
+//        this.widget = widget;
+//        this.$container = this.widget.element;
+//        this.dataGroups = [];
+//    }
 
-    TEListBox.prototype = {
-        load: function () {
-            var $source = this.$container.find("ul");
-            $source.remove();
+//    TEListBoxOld.prototype = {
+//        load: function () {
+//            var $source = this.$container.find("ul");
+//            $source.remove();
 
-            for (var i = 0, iLen = $source.length; i < iLen; i++) {
-                var $ul = $($source[i]);
-                var group = new TEListRowGroup(this, $ul);
+//            for (var i = 0, iLen = $source.length; i < iLen; i++) {
+//                var $ul = $($source[i]);
+//                var group = new TEListRowGroup(this, $ul);
 
-                var children = $ul.children();
-                for (var j = 0, jLen = children.length; j < jLen; j++) {
-                    group.children.push(new TEListRow(group, $(children[j])));
-                }
-                this.dataGroups.push(group);
-            }
-        },
-        resetAllChecked: function() {
-            for (var i in this.dataGroups) {
-                this.dataGroups[i].setAllChecked(false);
-            }
-        },
-        addBack: function(data) {
-            for (var i in this.dataGroups) {
-                this.dataGroups[i].addBack(data);
-            }
-        },
-        getSelectedRow: function() {
-            var ret = [];
-            for (var i in this.dataGroups) {
-                ret = ret.concat(this.dataGroups[i].getSelectedRow());
-            }
-            return ret;
-        }
-    };
+//                var children = $ul.children();
+//                for (var j = 0, jLen = children.length; j < jLen; j++) {
+//                    group.children.push(new TEListRow(group, $(children[j])));
+//                }
+//                this.dataGroups.push(group);
+//            }
+//        },
+//        resetAllChecked: function() {
+//            for (var i in this.dataGroups) {
+//                this.dataGroups[i].setAllChecked(false);
+//            }
+//        },
+//        addBack: function(data) {
+//            for (var i in this.dataGroups) {
+//                this.dataGroups[i].addBack(data);
+//            }
+//        },
+//        getSelectedRow: function() {
+//            var ret = [];
+//            for (var i in this.dataGroups) {
+//                ret = ret.concat(this.dataGroups[i].getSelectedRow());
+//            }
+//            return ret;
+//        }
+//    };
 
     function TEListBoxSearch(widget) {
         this.widget = widget;
@@ -199,16 +199,227 @@
         }
     };
 
-    function TEListReceiverRow(parent, $li) {
-        this.parent = parent;
-        this.name = $li.attr("name") || ("TEListRow-" + nextId++);
-        this.text = $li.text();
-        this.checked = false;
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-        this.$html = this.buildHtml($li);
-    }
+//    function TEListReceiverRow(parent, $li) {
+//        this.parent = parent;
+//        this.name = $li.attr("name") || ("TEListRow-" + nextId++);
+//        this.text = $li.text();
+//        this.checked = false;
 
-    TEListReceiverRow.prototype = {
+//        this.$html = this.buildHtml($li);
+//    }
+
+//    TEListReceiverRow.prototype = {
+//        buildHtml: function($li) {
+//            this.$html = $("<li>");
+//            this.$html.appendTo(this.parent.getHtml().find("ul"));
+
+//            this.$html.attr("name", this.name);
+//            this.$html.append($li.text());
+//            this.$html.toggleClass("selected", this.checked);
+//            this.$html.click($.proxy(this.onclick, this));
+
+//            return this.$html
+//        },
+//        getHtml: function() {
+//            return this.$html;
+//        },
+//        setChecked: function(flag) {
+//            this.checked = flag;
+//            this.$html.toggleClass("selected", flag);
+//        },
+//        resetAllChecked: function() {
+//            this.parent.resetAllChecked();
+//        },
+//        onclick: function(event) {
+//            if (event.ctrlKey) {
+//                this.setChecked(!this.checked);
+//            }
+//            else {
+//                this.resetAllChecked();
+//                this.setChecked(true);
+//            }
+//        },
+//        remove: function() {
+//            this.$html.remove();
+//        }
+//    };
+
+//    function TEListReceiverRowGroup(parent) {
+//        this.parent = parent;
+//        this.$html = this.buildHtml();
+//        this.children = [];
+//    }
+
+//    TEListReceiverRowGroup.prototype = {
+//        addRow: function(data) {
+//            this.children.push(new TEListReceiverRow(this, $(data.getHtml())));
+//        },
+//        buildHtml: function() {
+//            this.$html = $("<dl><dt></dt><dd><ul></ul></dd></dl>");
+//            this.$html.appendTo(this.parent.$container);
+
+//            return this.$html
+//        },
+//        getHtml: function() {
+//            return this.$html;
+//        },
+//        resetAllChecked: function() {
+//            this.parent.resetAllChecked();
+//        },
+//        setAllChecked: function(flag) {
+//            for (var i in this.children) {
+//                this.children[i].setChecked(flag);
+//            }
+//        },
+//        getSelectedRow: function() {
+//            var ret = [];
+//            for (var i in this.children) {
+//                var row = this.children[i];
+//                if (row.checked) {
+//                    ret.push(row);
+//                }
+//            }
+//            return ret;
+//        },
+//        reorderRow: function(direction) {
+//            var cnt = 0, lastChecked = this.children[0].checked;
+//            for (var i = 0, len = this.children.length; i < len; i++) {
+//                var data = this.children[i];
+//                if (!data.checked || data.checked != lastChecked) {
+//                    cnt++;
+//                }
+//                lastChecked = data.checked;
+//                data.mainOrder = data.checked ? cnt + direction : cnt;
+//                data.subOrder = i;
+//                data.checkOrder = data.checked ? direction : 0;
+//            }
+
+//            this.children.sort(function (a, b) {
+//                if (a.mainOrder != b.mainOrder)
+//                    return a.mainOrder - b.mainOrder;
+//                else if (a.checkOrder != b.checkOrder)
+//                    return a.checkOrder - b.checkOrder;
+//                else
+//                    return a.subOrder - b.subOrder;
+//            });
+
+//            var temp = $("<div>");
+//            for (var i in this.children) {
+//                this.children[i].getHtml().appendTo(temp);
+//                this.children[i].getHtml().appendTo(this.$html.find("ul"));
+//            }
+//        }
+//    };
+
+//    function TEListBoxReceiver(widget) {
+//        this.widget = widget;
+//        this.$container = widget.element;
+//        this.dataGroups = [new TEListReceiverRowGroup(this)];
+//    }
+
+//    TEListBoxReceiver.prototype = {
+//        addRow: function(data) {
+//            this.dataGroups[0].addRow(data);
+//        },
+//        resetAllChecked: function() {
+//            for (var i in this.dataGroups) {
+//                this.dataGroups[i].setAllChecked(false);
+//            }
+//        },
+//        getSelectedRow: function() {
+//            var ret = [];
+//            for (var i in this.dataGroups) {
+//                ret = ret.concat(this.dataGroups[i].getSelectedRow());
+//            }
+//            return ret;
+//        },
+//        reorderRow: function(direction) {
+//            for (var i in this.dataGroups) {
+//                this.dataGroups[i].reorderRow(direction);
+//            }
+//        }
+//    };
+
+/*
+* jQuery pulgin TEListBox
+*/
+//    $.widget("telexpress.TEListBoxReceiver", {
+//        options: {},
+//        _create: function() {
+//            this.listbox = new TEListBoxReceiver(this);
+//        },
+//        addRow: function(data) {
+//            this.listbox.addRow(data);
+//        },
+//        getSelectedRow: function() {
+//            return this.listbox.getSelectedRow();
+//        },
+//        reorderRow: function(direction) {
+//            var dir = (direction.toLowerCase() == "up" ? -1 : 1);
+//            this.listbox.reorderRow(dir);
+//        }
+//    });
+
+/*
+* jQuery pulgin TEListBoxSearch
+*/
+
+    $.widget("telexpress.TEListBoxSearch", {
+        options: {
+            showGroup: true
+        },
+        _create: function() {
+            this.searchbox = new TEListBoxSearch(this);
+            this.listbox = null;
+        },
+        registerDataSource: function(listbox) {
+            if (listbox instanceof TEListBox)
+                this.listbox = listbox;
+        }
+    });
+
+/*
+* jQuery pulgin TEListBox
+*/
+    $.widget("telexpress.TEListBoxOld", {
+        options: {},
+        _create: function() {
+            this.listbox = new TEListBox(this);
+
+            this.listbox.load();
+        },
+        registerSearchBox: function($searchBox) {
+            $searchBox.TEListBoxSearch("registerDataSource", this.listbox);
+        },
+        getSelectedRow: function() {
+            return this.listbox.getSelectedRow();
+        },
+        addBack: function(data) {
+            this.listbox.addBack(data);
+        }
+    });
+    
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+    var TEListRow = TEClass.create({
+        parent: null,
+        name: "",
+        text: "",
+        checked: false,
+        removed: false,
+        retainData: false,
+        $html: null,
+
+        ctor: function(parent ,$li) {
+            this.parent = parent;
+            this.name = $li.attr("name") || ("TEListRow-" + nextId++);
+            this.text = $li.text();
+            this.checked = false;
+            this.removed = false;
+            this.retainData = parent.retainData;
+            this.$html = this.buildHtml($li);
+        },
         buildHtml: function($li) {
             this.$html = $("<li>");
             this.$html.appendTo(this.parent.getHtml().find("ul"));
@@ -218,7 +429,7 @@
             this.$html.toggleClass("selected", this.checked);
             this.$html.click($.proxy(this.onclick, this));
 
-            return this.$html
+            return this.$html;
         },
         getHtml: function() {
             return this.$html;
@@ -226,6 +437,9 @@
         setChecked: function(flag) {
             this.checked = flag;
             this.$html.toggleClass("selected", flag);
+        },
+        show: function(flag) {
+            flag ? this.$html.show() : this.$html.hide();
         },
         resetAllChecked: function() {
             this.parent.resetAllChecked();
@@ -240,28 +454,60 @@
             }
         },
         remove: function() {
-            this.$html.remove();
-        }
-    };
-
-    function TEListReceiverRowGroup(parent) {
-        this.parent = parent;
-        this.$html = this.buildHtml();
-        this.children = [];
-    }
-
-    TEListReceiverRowGroup.prototype = {
-        addRow: function(data) {
-            this.children.push(new TEListReceiverRow(this, $(data.getHtml())));
+            if (this.retainData) {
+                this.removed = true;
+                this.setChecked(false);
+                this.show(false);
+            }
+            else {
+                this.$html.remove();
+            }
         },
-        buildHtml: function() {
-            this.$html = $("<dl><dt></dt><dd><ul></ul></dd></dl>");
-            this.$html.appendTo(this.parent.$container);
+        addBack: function(data) {
+            if (data.name === this.name) {
+                this.removed = false;
+            }
+        }
+    });
+    
+    var TEListRowGroup = TEClass.create({
+        parent: null,
+        $html: null,
+        children: null,
+        retainData: false,
+        grouping: false,
+
+        ctor: function(parent, $ul) {
+            this.parent = parent;
+            this.$html = this.buildHtml($ul);
+            this.children = [];
+            this.retainData = parent.retainData;
+            this.grouping = parent.grouping;
+        },
+        buildHtml: function($ul) {
+            if (this.grouping) {
+                this.$html = $("<dl><dt></dt><dd><ul></ul></dd></dl>");
+                this.$html.appendTo(this.parent.$container);
+
+                var title = $ul.html();
+			    var iPos = title.search(/<li/i);
+			    if(iPos >= 0) {
+				    title = title.substring(0, iPos);
+			    }
+                this.$html.find("dt").html(title);
+            }
+            else {
+                this.$html = $("<ul></ul>");
+                this.$html.appendTo(this.parent.$container);
+            }
 
             return this.$html
         },
         getHtml: function() {
             return this.$html;
+        },
+        show: function(flag) {
+            flag ? this.$html.show() : this.$html.hide();
         },
         resetAllChecked: function() {
             this.parent.resetAllChecked();
@@ -269,6 +515,16 @@
         setAllChecked: function(flag) {
             for (var i in this.children) {
                 this.children[i].setChecked(flag);
+            }
+        },
+        addRow: function(data) {
+            if (this.retainData) {
+                for (var i in this.children) {
+                    this.children[i].addBack(data);
+                }
+            }
+            else {
+                this.children.push(new TEListRow(this, $(data.getHtml())));
             }
         },
         getSelectedRow: function() {
@@ -282,14 +538,14 @@
             return ret;
         },
         reorderRow: function(direction) {
-            var cnt = 0, lastChecked = this.children[0].checked;
+            var orderCnt = 0, lastChecked = this.children[0].checked;
             for (var i = 0, len = this.children.length; i < len; i++) {
                 var data = this.children[i];
                 if (!data.checked || data.checked != lastChecked) {
-                    cnt++;
+                    orderCnt++;
                 }
                 lastChecked = data.checked;
-                data.mainOrder = data.checked ? cnt + direction : cnt;
+                data.mainOrder = data.checked ? orderCnt + direction : orderCnt;
                 data.subOrder = i;
                 data.checkOrder = data.checked ? direction : 0;
             }
@@ -309,21 +565,51 @@
                 this.children[i].getHtml().appendTo(this.$html.find("ul"));
             }
         }
-    };
+    });
+    
+    var TEListBox = TEClass.create({
+        widget: null,
+        $container: null,
+        dataGroups: null,
+        retainData: false,
+        grouping: false,
 
-    function TEListBoxReceiver(widget) {
-        this.widget = widget;
-        this.$container = widget.element;
-        this.dataGroups = [new TEListReceiverRowGroup(this)];
-    }
+        ctor: function(widget) {
+            this.widget = widget;
+            this.$container = this.widget.element;
+            this.dataGroups = [];
+            this.retainData = widget.options.retainData;
+            this.grouping = widget.options.grouping;
+        },
+        load: function () {
+            var $source = this.$container.find("ul");
+            $source.remove();
 
-    TEListBoxReceiver.prototype = {
-        addRow: function(data) {
-            this.dataGroups[0].addRow(data);
+            var iLen = ((!this.grouping && $source.length > 0) ? 1 : $source.length);
+            for (var i = 0; i < iLen; i++) {
+                var $ul = $($source[i]);
+                var group = new TEListRowGroup(this, $ul);
+
+                var children = $ul.children();
+                for (var j = 0, jLen = children.length; j < jLen; j++) {
+                    group.children.push(new TEListRow(group, $(children[j])));
+                }
+                this.dataGroups.push(group);
+            }
         },
         resetAllChecked: function() {
             for (var i in this.dataGroups) {
                 this.dataGroups[i].setAllChecked(false);
+            }
+        },
+        addRow: function(data) {
+            if (this.retainData) {
+                for (var i in this.dataGroups) {
+                    this.dataGroups[i].addRow(data);
+                }
+            }
+            else {
+                this.dataGroups[0].addRow(data);
             }
         },
         getSelectedRow: function() {
@@ -338,76 +624,44 @@
                 this.dataGroups[i].reorderRow(direction);
             }
         }
-    };
-
-/*
-* jQuery pulgin TEListBox
-*/
-    $.widget("telexpress.TEListBoxReceiver", {
-        options: {},
-        _create: function() {
-            this.listbox = new TEListBoxReceiver(this);
-        },
-        addRow: function(data) {
-            this.listbox.addRow(data);
-        },
-        getSelectedRow: function() {
-            return this.listbox.getSelectedRow();
-        },
-        reorderRow: function(direction) {
-            var dir = (direction.toLowerCase() == "up" ? -1 : 1);
-            this.listbox.reorderRow(dir);
-        },
-        //
-        gv: function (key) { return this[key]; }
-        //
     });
 
-/*
-* jQuery pulgin TEListBoxSearch
-*/
-
-    $.widget("telexpress.TEListBoxSearch", {
-        options: {
-            showGroup: true
-        },
-        _create: function() {
-            this.searchbox = new TEListBoxSearch(this);
-            this.listbox = null;
-        },
-        registerDataSource: function(listbox) {
-            if (listbox instanceof TEListBox)
-                this.listbox = listbox;
-        },
-        //
-        gv: function (key) { return this[key]; }
-        //
-    });
-
-/*
-* jQuery pulgin TEListBox
-*/
     $.widget("telexpress.TEListBox", {
-        options: {},
+        options: {
+            retainData: false,
+            grouping: false,
+            searchbox: {
+                box: "",
+                activeButton: "",
+                showGroup: false
+            },
+            connectWith: {
+                target: "",
+                activeButton: ""
+            },
+            orderControl: {
+                orderUp: "",
+                orderDown: ""
+            }
+        },
         _create: function() {
+            this._createListBox();
+            this._generateSearchBox();
+            this._generateConnection();
+            this._generateSortControl();
+        },
+        _createListBox: function() {
             this.listbox = new TEListBox(this);
-
             this.listbox.load();
         },
-        registerSearchBox: function($searchBox) {
-            $searchBox.TEListBoxSearch("registerDataSource", this.listbox);
+        _generateSearchBox: function() {
         },
-        getSelectedRow: function() {
-            return this.listbox.getSelectedRow();
+        _generateConnection: function() {
         },
-        addBack: function(data) {
-            this.listbox.addBack(data);
-        },
-        //
-        gv: function (key) { return this[key]; }
-        //
+        _generateSortControl: function() {
+        }
     });
-    
+
     //
     function log(s) { console.log(s); }
     //

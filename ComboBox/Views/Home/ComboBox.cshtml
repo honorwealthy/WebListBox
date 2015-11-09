@@ -37,14 +37,14 @@
                     </div>
                 </div>
                 <div class="column_arr_l_and_r">
-                    <div class="te_com_btn_edit_up arr_l_to_r" onclick="toright()"></div>
-                    <div class="te_com_btn_edit_up arr_r_to_l" onclick="toleft()"></div>
+                    <div class="te_com_btn_edit_up arr_l_to_r"></div>
+                    <div class="te_com_btn_edit_up arr_r_to_l"></div>
                 </div>
                 <div class="column_wrap">
                     <h5>目前欄位</h5>
                     <div class="column_arr_u_and_d">
-                        <div class="te_com_btn_edit_up" onclick="toup()"></div>
-                        <div class="te_com_btn_edit_down" onclick="todown()"></div>
+                        <div class="te_com_btn_edit_up"></div>
+                        <div class="te_com_btn_edit_down"></div>
                     </div>
                     <div class="column_current">
                     </div>
@@ -59,39 +59,41 @@
 
     <script>
         $(function () {
+//            $('.column_all').TEListBox();
+//            $('.column_search').TEListBoxSearch();
+
+//            $('.column_all').TEListBox("registerSearchBox", $('.column_search'));
+
+//            $('.column_current').TEListBoxReceiver();
+
             $('.column_all').TEListBox();
-            $('.column_search').TEListBoxSearch();
-
-            $('.column_all').TEListBox("registerSearchBox", $('.column_search'));
-
-            $('.column_current').TEListBoxReceiver();
         });
 
-        function toright() {
-            var rs = $('.column_all').TEListBox("getSelectedRow")
+//        function toright() {
+//            var rs = $('.column_all').TEListBox("getSelectedRow")
 
-            for (var k in rs) {
-                $('.column_current').TEListBoxReceiver("addRow", rs[k]);
-                rs[k].remove();
-            }
-        }
+//            for (var k in rs) {
+//                $('.column_current').TEListBoxReceiver("addRow", rs[k]);
+//                rs[k].remove();
+//            }
+//        }
 
-        function toleft() {
-            var rs = $('.column_current').TEListBoxReceiver("getSelectedRow");
+//        function toleft() {
+//            var rs = $('.column_current').TEListBoxReceiver("getSelectedRow");
 
-            for (var k in rs) {
-                $('.column_all').TEListBox("addBack", rs[k]);
-                rs[k].remove();
-            }
-        }
+//            for (var k in rs) {
+//                $('.column_all').TEListBox("addBack", rs[k]);
+//                rs[k].remove();
+//            }
+//        }
 
-        function toup() {
-            $('.column_current').TEListBoxReceiver("reorderRow", "up");
-        }
+//        function toup() {
+//            $('.column_current').TEListBoxReceiver("reorderRow", "up");
+//        }
 
-        function todown() {
-            $('.column_current').TEListBoxReceiver("reorderRow", "down");
-        }
+//        function todown() {
+//            $('.column_current').TEListBoxReceiver("reorderRow", "down");
+//        }
     </script>
 
 </body>
