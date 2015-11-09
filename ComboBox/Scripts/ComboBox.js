@@ -720,6 +720,15 @@
         _generateConnection: function() {
         },
         _generateSortControl: function() {
+            var orderUp = $(this.options.orderControl.orderUp);
+            if (orderUp.length > 0) {
+                this.listbox.reorderRow("up");
+            }
+            
+            var orderDown = $(this.options.orderControl.orderDown);
+            if (orderDown.legnth > 0) {
+                this.listbox.reorderRow("down");
+            }
         },
         //
         gv: function(key) { return this[key]; }

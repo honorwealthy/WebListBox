@@ -67,11 +67,15 @@
 //            $('.column_current').TEListBoxReceiver();
 
             $('.column_all').TEListBox({
-                grouping: true,
-                searchbox: {
-                    input: ".column_search input",
-                    activeButton: ".column_search .search_icon",
-                    showGroup: true
+//                grouping: true,
+//                searchbox: {
+//                    input: ".column_search input",
+//                    activeButton: ".column_search .search_icon",
+//                    showGroup: true
+//                },
+                orderControl: {
+                    orderUp: ".te_com_btn_edit_up",
+                    orderDown: ".te_com_btn_edit_down"
                 }
             });
         });
