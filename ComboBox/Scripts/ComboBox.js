@@ -567,7 +567,7 @@
             var temp = $("<div>");
             for (var i in this.children) {
                 this.children[i].getHtml().appendTo(temp);
-                this.children[i].getHtml().appendTo(this.$html.find("ul"));
+                this.children[i].getHtml().appendTo(this.$container);
             }
         }
     });
@@ -625,8 +625,9 @@
             return ret;
         },
         reorderRow: function(direction) {
+			var dir = (direction.toLowerCase() == "up" ? -1 : 1);
             for (var i in this.dataGroups) {
-                this.dataGroups[i].reorderRow(direction);
+                this.dataGroups[i].reorderRow(dir);
             }
         }
     });
@@ -721,13 +722,14 @@
         },
         _generateSortControl: function() {
             var orderUp = $(this.options.orderControl.orderUp);
+			var proxy = $.proxy(this.listbox.reorderRow, this.listbox);
             if (orderUp.length > 0) {
-                this.listbox.reorderRow("up");
+                orderUp.click(function() { proxy("up") });
             }
             
             var orderDown = $(this.options.orderControl.orderDown);
-            if (orderDown.legnth > 0) {
-                this.listbox.reorderRow("down");
+            if (orderDown.length > 0) {
+                orderDown.click(function() { proxy("down") });
             }
         },
         //

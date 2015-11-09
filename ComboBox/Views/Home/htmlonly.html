@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>資料撈取</title>
+<link type="text/css" rel="stylesheet" href="../../Styles/AuthModel.Areas.Admin.Content.reset.css" />
+<link type="text/css" rel="stylesheet" href="../../Styles/AuthModel.Areas.Admin.Content.header_and_footer.css" />
+<link type="text/css" rel="stylesheet" href="../../Styles/TecrmBackweb_Common.css" />
+<link type="text/css" rel="stylesheet" href="../../Styles/TecrmBackweb_DataMining.css" />
+
+<script src="../../Scripts/jquery-1.10.2.js"></script>
+<script src="../../Scripts/jquery-ui-1.11.4.js"></script>
+<script src="../../Scripts/TEClass.js"></script>
+<script src="../../Scripts/ComboBox.js"></script>
+
+</head>
+<body>
+    <!-- 彈出視窗begin -->
+    <div class="popup_wrap">
+        <div class="popup_box sheet_filter">
+            <span class="te_popup_btn_close" title="close"></span>
+            <h4 class="title_column_setting">欄位設定 <dfn>按住Ctrl可以複選</dfn></h4>
+            <hr>
+            <div class="popup_main">
+                <div class="column_wrap">
+                    <h5>所有欄位</h5>
+                    <div class="column_search">
+                        <input type="text" placeholder="輸入欲搜尋欄位">
+                        <div class="search_icon"></div>
+                    </div>
+                    <div class="column_all">
+                        <ul>會員資料
+                            <li name='a1'>會員種類1</li>
+                            <li>會員姓名1</li>
+                            <li>會員生日2</li>
+                            <li>會員手機3</li>
+                            <li name='a5'>縣市5</li>
+                        </ul>
+                        <ul>訂單資料
+                            <li name='a6'>消費時間233</li>
+                            <li name='a7'>總消費金額377</li>
+                            <li name='a8'>單筆消費金額610</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column_arr_l_and_r">
+                    <div class="te_com_btn_edit_up arr_l_to_r"></div>
+                    <div class="te_com_btn_edit_up arr_r_to_l"></div>
+                </div>
+                <div class="column_wrap">
+                    <h5>目前欄位</h5>
+                    <div class="column_arr_u_and_d">
+                        <div class="te_com_btn_edit_up"></div>
+                        <div class="te_com_btn_edit_down"></div>
+                    </div>
+                    <div class="column_current">
+                        <ul>會員資料
+                            <li name='a1'>會員種類1</li>
+                            <li>會員姓名1</li>
+                            <li>會員生日2</li>
+                            <li>會員手機3</li>
+                            <li name='a5'>縣市5</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="popup_btn">
+                <input class="te_com_btn_sub" type="button" value="確定">
+            </div>
+        </div>
+    </div>
+    <!-- 彈出視窗end -->
+
+    <script>
+        $(function () {
+//            $('.column_all').TEListBox();
+//            $('.column_search').TEListBoxSearch();
+
+//            $('.column_all').TEListBox("registerSearchBox", $('.column_search'));
+
+//            $('.column_current').TEListBoxReceiver();
+
+            $('.column_current').TEListBox({
+//                grouping: true,
+//                searchbox: {
+//                    input: ".column_search input",
+//                    activeButton: ".column_search .search_icon",
+//                    showGroup: true
+//                },
+                orderControl: {
+                    orderUp: ".te_com_btn_edit_up",
+                    orderDown: ".te_com_btn_edit_down"
+                }
+            });
+        });
+
+//        function toright() {
+//            var rs = $('.column_all').TEListBox("getSelectedRow")
+
+//            for (var k in rs) {
+//                $('.column_current').TEListBoxReceiver("addRow", rs[k]);
+//                rs[k].remove();
+//            }
+//        }
+
+//        function toleft() {
+//            var rs = $('.column_current').TEListBoxReceiver("getSelectedRow");
+
+//            for (var k in rs) {
+//                $('.column_all').TEListBox("addBack", rs[k]);
+//                rs[k].remove();
+//            }
+//        }
+
+//        function toup() {
+//            $('.column_current').TEListBoxReceiver("reorderRow", "up");
+//        }
+
+//        function todown() {
+//            $('.column_current').TEListBoxReceiver("reorderRow", "down");
+//        }
+    </script>
+
+</body>
+</html>
