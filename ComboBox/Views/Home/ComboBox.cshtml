@@ -23,22 +23,22 @@
                     </div>
                     <div class="column_all">
                         <ul>會員資料
-                            <li id='a1'>會員種類1</li>
+                            <li name='a1'>會員種類1</li>
                             <li>會員姓名1</li>
                             <li>會員生日2</li>
                             <li>會員手機3</li>
-                            <li id='a5'>縣市5</li>
+                            <li name='a5'>縣市5</li>
                         </ul>
                         <ul>訂單資料
-                            <li id='a6'>消費時間233</li>
-                            <li id='a7'>總消費金額377</li>
-                            <li id='a8'>單筆消費金額610</li>
+                            <li name='a6'>消費時間233</li>
+                            <li name='a7'>總消費金額377</li>
+                            <li name='a8'>單筆消費金額610</li>
                         </ul>
                     </div>
                 </div>
                 <div class="column_arr_l_and_r">
                     <div class="te_com_btn_edit_up arr_l_to_r" onclick="toright()"></div>
-                    <div class="te_com_btn_edit_up arr_r_to_l"></div>
+                    <div class="te_com_btn_edit_up arr_r_to_l" onclick="toleft()"></div>
                 </div>
                 <div class="column_wrap">
                     <h5>目前欄位</h5>
@@ -68,20 +68,19 @@
         });
 
         function toright() {
-            var gs = $('.column_all').TEListBox("gv", "listbox").dataGroups;
-            var rs = [];
-            for (var i in gs) {
-                var g = gs[i];
-                for (var j in g.children) {
-                    var row = g.children[j];
-                    if (row.checked) {
-                        rs.push(row);
-                    }
-                }
-            }
+            var rs = $('.column_all').TEListBox("getSelectedRow")
 
             for (var k in rs) {
                 $('.column_current').TEListBoxReceiver("addRow", rs[k]);
+                rs[k].remove();
+            }
+        }
+
+        function toleft() {
+            var rs = $('.column_current').TEListBoxReceiver("getSelectedRow");
+
+            for (var k in rs) {
+                $('.column_all').TEListBox("addBack", rs[k]);
                 rs[k].remove();
             }
         }

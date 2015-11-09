@@ -10,6 +10,7 @@
 
     function TEListRow(parent ,$li) {
         this.parent = parent;
+        this.name = $li.attr("name") || ("TEListRow-" + nextId++);
         this.text = $li.text();
         this.checked = $li.hasClass("selected");
         this.removed = false;
@@ -22,7 +23,7 @@
             this.$html = $("<li>");
             this.$html.appendTo(this.parent.getHtml().find("ul"));
 
-            this.$html.prop("name", $li.attr("name") || ("TEListRow-" + nextId++));
+            this.$html.attr("name", this.name);
             this.$html.append($li.text());
             this.$html.toggleClass("selected", $li.hasClass("selected"));
             this.$html.click($.proxy(this.onclick, this));
@@ -56,8 +57,10 @@
             this.setChecked(false);
             this.show(false);
         },
-        addBack: function() {
-            this.removed = false;
+        addBack: function(data) {
+            if (data.name === this.name) {
+                this.removed = false;
+            }
         }
     }
 
@@ -94,6 +97,21 @@
             for (var i in this.children) {
                 this.children[i].setChecked(flag);
             }
+        },
+        addBack: function(data) {
+            for (var i in this.children) {
+                this.children[i].addBack(data);
+            }
+        },
+        getSelectedRow: function() {
+            var ret = [];
+            for (var i in this.children) {
+                var row = this.children[i];
+                if (row.checked) {
+                    ret.push(row);
+                }
+            }
+            return ret;
         }
     };
 
@@ -123,6 +141,18 @@
             for (var i in this.dataGroups) {
                 this.dataGroups[i].setAllChecked(false);
             }
+        },
+        addBack: function(data) {
+            for (var i in this.dataGroups) {
+                this.dataGroups[i].addBack(data);
+            }
+        },
+        getSelectedRow: function() {
+            var ret = [];
+            for (var i in this.dataGroups) {
+                ret = ret.concat(this.dataGroups[i].getSelectedRow());
+            }
+            return ret;
         }
     };
 
@@ -171,6 +201,7 @@
 
     function TEListReceiverRow(parent, $li) {
         this.parent = parent;
+        this.name = $li.attr("name") || ("TEListRow-" + nextId++);
         this.text = $li.text();
         this.checked = false;
 
@@ -182,7 +213,7 @@
             this.$html = $("<li>");
             this.$html.appendTo(this.parent.getHtml().find("ul"));
 
-            this.$html.prop("name", $li.attr("name") || ("TEListRow-" + nextId++));
+            this.$html.attr("name", this.name);
             this.$html.append($li.text());
             this.$html.toggleClass("selected", this.checked);
             this.$html.click($.proxy(this.onclick, this));
@@ -207,6 +238,9 @@
                 this.resetAllChecked();
                 this.setChecked(true);
             }
+        },
+        remove: function() {
+            this.$html.remove();
         }
     };
 
@@ -236,6 +270,16 @@
             for (var i in this.children) {
                 this.children[i].setChecked(flag);
             }
+        },
+        getSelectedRow: function() {
+            var ret = [];
+            for (var i in this.children) {
+                var row = this.children[i];
+                if (row.checked) {
+                    ret.push(row);
+                }
+            }
+            return ret;
         }
     };
 
@@ -253,6 +297,13 @@
             for (var i in this.dataGroups) {
                 this.dataGroups[i].setAllChecked(false);
             }
+        },
+        getSelectedRow: function() {
+            var ret = [];
+            for (var i in this.dataGroups) {
+                ret = ret.concat(this.dataGroups[i].getSelectedRow());
+            }
+            return ret;
         }
     };
 
@@ -266,6 +317,9 @@
         },
         addRow: function(data) {
             this.listbox.addRow(data);
+        },
+        getSelectedRow: function() {
+            return this.listbox.getSelectedRow();
         },
         //
         gv: function (key) { return this[key]; }
@@ -305,6 +359,12 @@
         },
         registerSearchBox: function($searchBox) {
             $searchBox.TEListBoxSearch("registerDataSource", this.listbox);
+        },
+        getSelectedRow: function() {
+            return this.listbox.getSelectedRow();
+        },
+        addBack: function(data) {
+            this.listbox.addBack(data);
         },
         //
         gv: function (key) { return this[key]; }
