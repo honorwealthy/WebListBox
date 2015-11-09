@@ -461,6 +461,7 @@
             }
             else {
                 this.$html.remove();
+				this.parent.remove(this);
             }
         },
         addBack: function(data) {
@@ -542,7 +543,16 @@
             }
             return ret;
         },
+		remove: function(child) {
+			var idx = this.children.indexOf(child);
+			if (idx > -1) {
+				this.children.splice(idx, 1);
+			}
+		},
         reorderRow: function(direction) {
+			if (this.children.length < 2)
+				return;
+			
             var orderCnt = 0, lastChecked = this.children[0].checked;
             for (var i = 0, len = this.children.length; i < len; i++) {
                 var data = this.children[i];
@@ -629,7 +639,14 @@
             for (var i in this.dataGroups) {
                 this.dataGroups[i].reorderRow(dir);
             }
-        }
+        },
+		sendRows: function(connectWith) {
+			var rows = this.getSelectedRow();
+			for (var i in rows) {
+				connectWith.TEListBox("receiveRows", rows[i]);
+				rows[i].remove();
+			}
+		}
     });
 
     var TEListBoxSearch = TEClass.create({
@@ -719,6 +736,12 @@
             }
         },
         _generateConnection: function() {
+			var connectWith = $(this.options.connectWith.target);
+			var activeButton = $(this.options.connectWith.activeButton);
+            if (connectWith.length > 0 && activeButton.length > 0) {
+				var proxy = $.proxy(this.listbox.sendRows, this.listbox);
+				activeButton.click(function() { proxy(connectWith); });
+            }
         },
         _generateSortControl: function() {
             var orderUp = $(this.options.orderControl.orderUp);
@@ -732,13 +755,9 @@
                 orderDown.click(function() { proxy("down") });
             }
         },
-        //
-        gv: function(key) { return this[key]; }
-        //
+		receiveRows: function(row) {
+			this.listbox.addRow(row);
+		}
     });
-
-    //
-    function log(s) { console.log(s); }
-    //
 
 } (jQuery));

@@ -53,13 +53,7 @@
                         <div class="te_com_btn_edit_down"></div>
                     </div>
                     <div class="column_current">
-                        <ul>會員資料
-                            <li name='a1'>會員種類1</li>
-                            <li>會員姓名1</li>
-                            <li>會員生日2</li>
-                            <li>會員手機3</li>
-                            <li name='a5'>縣市5</li>
-                        </ul>
+						<ul></ul>
                     </div>
                 </div>
             </div>
@@ -79,18 +73,29 @@
 
 //            $('.column_current').TEListBoxReceiver();
 
-            $('.column_current').TEListBox({
-//                grouping: true,
-//                searchbox: {
-//                    input: ".column_search input",
-//                    activeButton: ".column_search .search_icon",
-//                    showGroup: true
-//                },
-                orderControl: {
-                    orderUp: ".te_com_btn_edit_up",
-                    orderDown: ".te_com_btn_edit_down"
-                }
+            $('.column_all').TEListBox({
+				retainData: true,
+                grouping: true,
+                searchbox: {
+                    input: ".column_search input",
+                    activeButton: ".column_search .search_icon",
+                    showGroup: true
+                },
+				connectWith: {
+					target: ".column_current",
+					activeButton: ".te_com_btn_edit_up.arr_l_to_r"
+				}
             });
+			$('.column_current').TEListBox({
+				connectWith: {
+					target: ".column_all",
+					activeButton: ".te_com_btn_edit_up.arr_r_to_l"
+				},
+				orderControl: {
+                    orderUp: ".column_arr_u_and_d .te_com_btn_edit_up",
+                    orderDown: ".column_arr_u_and_d .te_com_btn_edit_down"
+				}
+			});
         });
 
 //        function toright() {
