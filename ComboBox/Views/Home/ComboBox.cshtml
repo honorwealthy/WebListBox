@@ -66,7 +66,14 @@
 
 //            $('.column_current').TEListBoxReceiver();
 
-            $('.column_all').TEListBox();
+            $('.column_all').TEListBox({
+                grouping: true,
+                searchbox: {
+                    input: ".column_search input",
+                    activeButton: ".column_search .search_icon",
+                    showGroup: true
+                }
+            });
         });
 
 //        function toright() {
