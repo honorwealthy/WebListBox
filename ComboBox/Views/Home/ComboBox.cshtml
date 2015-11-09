@@ -43,8 +43,8 @@
                 <div class="column_wrap">
                     <h5>目前欄位</h5>
                     <div class="column_arr_u_and_d">
-                        <div class="te_com_btn_edit_up"></div>
-                        <div class="te_com_btn_edit_down"></div>
+                        <div class="te_com_btn_edit_up" onclick="toup()"></div>
+                        <div class="te_com_btn_edit_down" onclick="todown()"></div>
                     </div>
                     <div class="column_current">
                     </div>
@@ -83,6 +83,14 @@
                 $('.column_all').TEListBox("addBack", rs[k]);
                 rs[k].remove();
             }
+        }
+
+        function toup() {
+            $('.column_current').TEListBoxReceiver("reorderRow", "up");
+        }
+
+        function todown() {
+            $('.column_current').TEListBoxReceiver("reorderRow", "down");
         }
     </script>
 
