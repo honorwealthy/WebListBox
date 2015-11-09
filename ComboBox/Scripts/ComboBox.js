@@ -383,23 +383,23 @@
 /*
 * jQuery pulgin TEListBox
 */
-    $.widget("telexpress.TEListBoxOld", {
-        options: {},
-        _create: function() {
-            this.listbox = new TEListBox(this);
+//    $.widget("telexpress.TEListBoxOld", {
+//        options: {},
+//        _create: function() {
+//            this.listbox = new TEListBox(this);
 
-            this.listbox.load();
-        },
-        registerSearchBox: function($searchBox) {
-            $searchBox.TEListBoxSearch("registerDataSource", this.listbox);
-        },
-        getSelectedRow: function() {
-            return this.listbox.getSelectedRow();
-        },
-        addBack: function(data) {
-            this.listbox.addBack(data);
-        }
-    });
+//            this.listbox.load();
+//        },
+//        registerSearchBox: function($searchBox) {
+//            $searchBox.TEListBoxSearch("registerDataSource", this.listbox);
+//        },
+//        getSelectedRow: function() {
+//            return this.listbox.getSelectedRow();
+//        },
+//        addBack: function(data) {
+//            this.listbox.addBack(data);
+//        }
+//    });
     
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
     var TEListRow = TEClass.create({
@@ -533,11 +533,21 @@
                 this.children.push(new TEListRow(this, $(data.getHtml())));
             }
         },
-        getSelectedRow: function() {
+        getSelectedRows: function() {
             var ret = [];
             for (var i in this.children) {
                 var row = this.children[i];
                 if (row.checked) {
+                    ret.push(row);
+                }
+            }
+            return ret;
+        },
+		getRows: function() {
+            var ret = [];
+            for (var i in this.children) {
+                var row = this.children[i];
+                if (!row.removed) {
                     ret.push(row);
                 }
             }
@@ -601,16 +611,23 @@
             $source.remove();
 
             var iLen = ((!this.grouping && $source.length > 0) ? 1 : $source.length);
-            for (var i = 0; i < iLen; i++) {
-                var $ul = $($source[i]);
-                var group = new TEListRowGroup(this, $ul);
+			if (iLen == 0) {
+				var $ul = $("<ul>");
+				var group = new TEListRowGroup(this, $ul);
+				this.dataGroups.push(group);
+			}
+			else {
+				for (var i = 0; i < iLen; i++) {
+					var $ul = $($source[i]);
+					var group = new TEListRowGroup(this, $ul);
 
-                var children = $ul.children();
-                for (var j = 0, jLen = children.length; j < jLen; j++) {
-                    group.children.push(new TEListRow(group, $(children[j])));
-                }
-                this.dataGroups.push(group);
-            }
+					var children = $ul.children();
+					for (var j = 0, jLen = children.length; j < jLen; j++) {
+						group.children.push(new TEListRow(group, $(children[j])));
+					}
+					this.dataGroups.push(group);
+				}
+			}
         },
         resetAllChecked: function() {
             for (var i in this.dataGroups) {
@@ -627,10 +644,17 @@
                 this.dataGroups[0].addRow(data);
             }
         },
-        getSelectedRow: function() {
+        getSelectedRows: function() {
             var ret = [];
             for (var i in this.dataGroups) {
-                ret = ret.concat(this.dataGroups[i].getSelectedRow());
+                ret = ret.concat(this.dataGroups[i].getSelectedRows());
+            }
+            return ret;
+        },
+		getRows: function() {
+            var ret = [];
+            for (var i in this.dataGroups) {
+                ret = ret.concat(this.dataGroups[i].getRows());
             }
             return ret;
         },
@@ -641,7 +665,7 @@
             }
         },
 		sendRows: function(connectWith) {
-			var rows = this.getSelectedRow();
+			var rows = this.getSelectedRows();
 			for (var i in rows) {
 				connectWith.TEListBox("receiveRows", rows[i]);
 				rows[i].remove();
@@ -757,6 +781,9 @@
         },
 		receiveRows: function(row) {
 			this.listbox.addRow(row);
+		},
+		getRows: function(selected) {
+			return selected ? this.listbox.getSelectedRows() : this.listbox.getRows();
 		}
     });
 
