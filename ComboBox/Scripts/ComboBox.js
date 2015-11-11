@@ -24,9 +24,9 @@
             this.name = $li.attr("name") || ("TEListRow-" + nextId++);
             this.text = $li.text();
             this.checked = false;
-            this.removed = false;
-            this.visible = true;
+            this.removed = $li.hasClass("remove");
             this.buildHtml($li);
+            this.show(true);
         },
         buildHtml: function ($li) {
             this.$html = $("<li>");
@@ -35,6 +35,7 @@
             this.$html.attr("name", this.name);
             this.$html.append($li.text());
             this.$html.toggleClass("selected", this.checked);
+            this.$html.toggleClass("TEListRow-Remove", this.removed);
             this.$html.click($.proxy(this.onclick, this));
 
             return this.$html;
@@ -71,6 +72,7 @@
         remove: function () {
             if (this.retainData) {
                 this.removed = true;
+                this.$html.toggleClass("TEListRow-Remove", true);
                 this.setChecked(false);
                 this.show(false);
             }
@@ -83,6 +85,7 @@
         addBack: function (data) {
             if (data.name === this.name) {
                 this.removed = false;
+                this.$html.toggleClass("TEListRow-Remove", false);
                 this.show(true);
                 this.parent.refresh();
             }
@@ -191,9 +194,10 @@
                     if (this.children[i].visible)
                         cnt++;
                 }
-
+            
                 this.show(this.showNoChildGroup || (cnt > 0));
             }
+            this.parent.refresh();
         },
         reorderRow: function (direction) {
             if (this.children.length < 2)
@@ -262,6 +266,7 @@
                     for (var j = 0, jLen = children.length; j < jLen; j++) {
                         group.children.push(new TEListRow(group, $(children[j])));
                     }
+                    group.refresh();
                     this.dataGroups.push(group);
                 }
             }
@@ -313,6 +318,9 @@
                 connectWith.TEListBox("receiveRows", rows[i]);
                 rows[i].remove();
             }
+        },
+        refresh: function () {
+            this.widget.refresh();
         }
     });
 
@@ -320,6 +328,7 @@
         listbox: null,
         input: null,
         activeButton: null,
+        searching: false,
 
         ctor: function (listbox, options) {
             this.listbox = listbox;
@@ -340,6 +349,8 @@
             }
         },
         search: function (event) {
+            this.searching = true;
+
             var val = $.trim(this.input.val()).toUpperCase();
             var sourceGroups = this.listbox.dataGroups;
 
@@ -359,6 +370,13 @@
                     }
                 }
                 group.refresh();
+            }
+            
+            this.searching = false;
+        },
+        doSearch: function () {
+            if (this.searching === false) {
+                this.search();
             }
         }
     });
@@ -426,6 +444,11 @@
         },
         getRows: function (selected) {
             return selected ? this.listbox.getSelectedRows() : this.listbox.getRows();
+        },
+        refresh: function () {
+            if (this.searchbox !== void 0) {
+                this.searchbox.doSearch.call(this.searchbox);
+            }
         }
     });
 
