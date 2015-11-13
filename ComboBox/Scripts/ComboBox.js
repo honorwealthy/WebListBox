@@ -15,6 +15,7 @@
         text: "",
         checked: false,
         removed: false,
+        data: null,
         retainData: false,
         visible: true,
         $html: null,
@@ -25,6 +26,7 @@
             this.text = $li.text();
             this.checked = false;
             this.removed = $li.hasClass("remove");
+            this.data = $li.data("data") || {};
             this.buildHtml($li);
             this.show(true);
         },
@@ -33,6 +35,8 @@
             this.$html.appendTo(this.parent.$container);
 
             this.$html.attr("name", this.name);
+            this.$html.attr("title", $li.attr("title"));
+            this.$html.data("data", this.data);
             this.$html.append($li.text());
             this.$html.toggleClass("selected", this.checked);
             this.$html.toggleClass("TEListRow-Remove", this.removed);
@@ -98,6 +102,7 @@
         retainData: false,
         grouping: false,
         showNoChildGroup: false,
+        expanded: false,
         $html: null,
         $container: null,
 
@@ -118,7 +123,9 @@
                 if (iPos >= 0) {
                     title = title.substring(0, iPos);
                 }
-                this.$html.find("dt").html(title);
+                this.$html.find("dt").attr("title", $ul.attr("title")).html(title);
+                var expandFun = $.proxy(this.toggleExpand, this);
+                this.$html.find("dt").click(function () { expandFun(); });
 
                 this.$container = this.$html.find("ul");
             }
@@ -135,6 +142,7 @@
             return this.$html;
         },
         show: function (flag) {
+            this.toggleExpand(true);
             flag ? this.$html.show() : this.$html.hide();
         },
         resetAllChecked: function () {
@@ -198,6 +206,19 @@
                 this.show(this.showNoChildGroup || (cnt > 0));
             }
             this.parent.refresh();
+        },
+        toggleExpand: function (expanded) {
+            if (!this.grouping)
+                return;
+
+            if (expanded !== undefined) {
+                this.expanded = expanded;
+            }
+            else {
+                this.expanded = !this.expanded;
+            }
+
+            this.$html.toggleClass("title_close", !this.expanded);
         },
         reorderRow: function (direction) {
             if (this.children.length < 2)
@@ -443,10 +464,10 @@
             this.listbox.addRow(row);
         },
         getRows: function (selected) {
-            return selected ? this.listbox.getSelectedRows() : this.listbox.getRows();
+            return selected === true ? this.listbox.getSelectedRows() : this.listbox.getRows();
         },
         refresh: function () {
-            if (this.searchbox !== void 0) {
+            if (this.searchbox !== undefined) {
                 this.searchbox.doSearch.call(this.searchbox);
             }
         }
