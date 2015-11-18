@@ -202,7 +202,7 @@
                     if (this.children[i].visible)
                         cnt++;
                 }
-            
+
                 this.show(this.showNoChildGroup || (cnt > 0));
             }
             this.parent.refresh();
@@ -392,7 +392,7 @@
                 }
                 group.refresh();
             }
-            
+
             this.searching = false;
         },
         doSearch: function () {
